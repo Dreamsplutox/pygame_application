@@ -1,5 +1,5 @@
 import pygame
-from src.monster import Monster
+from monster import Monster
 pygame.init()
 
 

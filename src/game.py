@@ -1,15 +1,15 @@
 from random import *
 import pygame
 
-from src.ghost import Ghost
-from src.golem import Golem
-from src.player import Player
+from ghost import Ghost #pycharm est une pute
+from golem import Golem
+from player import Player
 from src.projectile import Projectile
 
 # Game part
 pygame.init()
 
-win = pygame.display.set_mode((500, 480))
+win = pygame.display.set_mode((1200, 675))
 
 pygame.display.set_caption("First Game in Python")
 
