@@ -9,11 +9,11 @@ from src.projectile import Projectile
 # Game part
 pygame.init()
 
-win = pygame.display.set_mode((1200, 675))
+win = pygame.display.set_mode((1210, 598))
 
 pygame.display.set_caption("First Game in Python")
 
-bg = pygame.image.load('images/bg.jpg')
+bg = pygame.image.load('images/arene1.jpg')
 
 clock = pygame.time.Clock()
 
