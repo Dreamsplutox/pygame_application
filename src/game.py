@@ -41,7 +41,7 @@ def redrawGameWindow():
 font = pygame.font.SysFont('comicsans', 30, True)
 fontB = pygame.font.SysFont('comicsans', 18, False, True)
 man = Player(300, 410, 64, 64)
-golem = Golem(300, 345, 64, 64, 370, 5)
+golem = Golem(300, 380, 64, 64, 370, 5)
 ghost = Ghost(100, 410, 64, 64, 450, 5)
 shootLoop = 0
 bullets = []
