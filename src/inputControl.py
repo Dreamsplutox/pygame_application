@@ -6,6 +6,9 @@ def control_input(arguments):
     list_monsters = ["ghost", "golem", "player", "enemy"]
     print(len(arguments))
     if len(arguments) < 6:
+        if len(arguments) == 1:
+            print("selection des arguments par défaut : ghost, agressive, golem, fuyarde, 2")
+            return "ghost", "agressive", "golem", "fuyarde", "2"
         print("Pas assez d'arguments entrés ! Il faut en entrer 5")
         sys.exit()
     else:
