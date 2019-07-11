@@ -1,5 +1,8 @@
 from random import *
 import sys
+import pygame
+
+pygame.init()
 
 #print ("The arguments are: " , str(arguments))
 def control_input(arguments):
@@ -60,3 +63,20 @@ def control_input(arguments):
             sys.exit()
 
         return monster_1, monster_1_ia, monster_2, monster_2_ia, ground
+
+def init_music_and_ground(ground):
+
+    if ground == "1":
+        bg = pygame.image.load('images/arene1.jpg')
+        music = pygame.mixer.music.load('sounds/musiques/musicArene1.mp3')
+        win = pygame.display.set_mode((1210, 598))
+    elif ground == "2":
+        bg = pygame.image.load('images/arene2.png')
+        music = pygame.mixer.music.load('sounds/musiques/musicArene2.mp3')
+        win = pygame.display.set_mode((1100, 675))
+    else:
+        bg = pygame.image.load('images/arene3.png')
+        music = pygame.mixer.music.load('sounds/musiques/musicArene3.mp3')
+        win = pygame.display.set_mode((1050, 590))
+
+    return bg, music, win

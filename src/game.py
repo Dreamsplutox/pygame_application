@@ -8,24 +8,25 @@ from golem import Golem
 from player import Player
 from projectile import Projectile
 
-
+#init parameters with console arguments provided
 monster_1, monster_1_ia, monster_2, monster_2_ia, ground = inputControl.control_input(sys.argv)
 
 # Game part
 pygame.init()
 
-win = pygame.display.set_mode((1210, 598))
+bg, music, win = inputControl.init_music_and_ground(ground)
+#win = pygame.display.set_mode((1210, 598))
 
 pygame.display.set_caption("First Game in Python")
 
-bg = pygame.image.load('images/arene1.jpg')
+#bg = pygame.image.load('images/arene1.jpg')
 
 clock = pygame.time.Clock()
 
 winSound = pygame.mixer.Sound('sounds/win.wav')
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 
-music = pygame.mixer.music.load('sounds/music.mp3')
+#music = pygame.mixer.music.load('sounds/music.mp3')
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
 
