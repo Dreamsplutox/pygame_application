@@ -25,7 +25,7 @@ font = pygame.font.SysFont('comicsans', 30, True)
 
 
 class Player(object):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, end, lives, begin=0):
         self.x = x
         self.y = y
         self.width = width
@@ -38,7 +38,7 @@ class Player(object):
         self.walkCount = 0
         self.standing = True
         self.hitbox = (self.x + 17, self.y + 11, 29, 52)
-        self.lives = 5
+        self.lives = lives
         self.score = 0
 
     def draw(self, win):
@@ -58,8 +58,6 @@ class Player(object):
             else:
                 win.blit(walkLeft[0], (self.x, self.y))
         self.hitbox = (self.x + 17, self.y + 11, 29, 52)
-
-    # pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
 
     def hit(self, win):
         self.isJump = False

@@ -6,6 +6,7 @@ import sys
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
 from player import Player
+from enemy import Enemy
 from projectile import Projectile
 
 # Game part
@@ -51,9 +52,13 @@ def redrawGameWindow():
     win.blit(monster_1_img, (positions_monster[0], positions_monster[2]))
     win.blit(monster_2_img, (positions_monster[1], positions_monster[2]))
 
+    monster_in_game_1.draw(win)
+    monster_in_game_2.draw(win)
+    '''
     man.draw(win)
     ghost.draw(win)
     golem.draw(win)
+    '''
     for bullet in bullets:
         bullet.draw(win)
     pygame.display.update()
@@ -62,9 +67,17 @@ def redrawGameWindow():
 # mainloop
 font_lives = pygame.font.SysFont('comicsans', 25, True)
 font_percentage = pygame.font.SysFont('comicsans', 28)
-man = Player(300, 410, 64, 64)
-golem = Golem(300, 380, 64, 64, 370, 5)
-ghost = Ghost(100, 410, 64, 64, 450, 5)
+#man = Player(300, 410, 64, 64)
+#golem = Golem(300, 380, 64, 64, 370, 5)
+#ghost = Ghost(100, 410, 64, 64, 450, 5)
+monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground)
+monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground)
+
+if monster_in_game_1 == monster_in_game_2:
+    print("WTF")
+else:
+    print("monster_in_game_1 = ", monster_in_game_1)
+    print("monster_in_game_2 = ", monster_in_game_2)
 shootLoop = 0
 bullets = []
 run = True
@@ -73,11 +86,13 @@ while run:
     clock.tick(27)
 
     # win condition
+    '''
     if man.score >= 10:
         pygame.display.update()
         pygame.mixer.music.stop()
         pygame.mixer.music.set_volume(0.8)
         winSound.play()
+    '''
 
     # del goblin
     # goblin = Enemy(randint(90,400), 410, 64, 64, 450)
@@ -86,6 +101,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
+    '''
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT] and man.x > man.vel:
@@ -117,6 +133,7 @@ while run:
         else:
             man.isJump = False
             man.jumpCount = 10
+    '''
     redrawGameWindow()
 
 pygame.quit()

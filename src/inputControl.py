@@ -2,6 +2,12 @@ from random import *
 import sys
 import pygame
 
+from ghost import Ghost #pycharm est une pute
+from golem import Golem
+from player import Player
+from enemy import Enemy
+from projectile import Projectile
+
 pygame.init()
 
 #print ("The arguments are: " , str(arguments))
@@ -110,4 +116,45 @@ def init_images_for_score(monster_1, monster_2):
         monster_2_img = pygame.image.load('images/goblin/goblin_char_L.png')
 
     return monster_1_img, monster_2_img
+
+def init_monster_in_game(monster_name, monster_number, ground):
+    list_monsters = ["ghost", "golem", "player", "enemy"]
+    if ground == "1":
+        start_x_monster_1 = 60
+        start_x_monster_2 = 1150
+    elif ground == "2":
+        start_x_monster_1 = 60
+        start_x_monster_2 = 1040
+    else:
+        start_x_monster_1 = 60
+        start_x_monster_2 = 950
+
+    if monster_number == 1:
+        if monster_name == list_monsters[0]:
+            monster = Ghost(start_x_monster_1, 410, 64, 64, 800, 5)
+            #monster = Ghost(x, y, width, height, end, lives, begin)
+        elif monster_name == list_monsters[1]:
+            monster = Golem(start_x_monster_1, 380, 64, 64, 800, 5)
+            #monster = Golem(x, y, width, height, end, lives, begin)
+        elif monster_name == list_monsters[2]:
+            monster = Player(start_x_monster_1, 410, 64, 64, 800, 5)
+            #monster = Player(x, y, width, height, end, lives, begin)
+        else:
+            monster = Enemy(start_x_monster_1, 450, 64, 64, 800, 5)
+            #monster = Enemy(x, y, width, height, end, lives, begin)
+    else:
+        if monster_name == list_monsters[0]:
+            monster = Ghost(start_x_monster_2, 410, 64, 64, 800, 5)
+            #monster = Ghost(x, y, width, height, end, lives, begin)
+        elif monster_name == list_monsters[1]:
+            monster = Golem(start_x_monster_2, 380, 64, 64, 800, 5)
+            #monster = Golem(x, y, width, height, end, lives, begin)
+        elif monster_name == list_monsters[2]:
+            monster = Player(start_x_monster_2, 410, 64, 64, 800, 5)
+            #monster = Player(x, y, width, height, end, lives, begin)
+        else:
+            monster = Enemy(start_x_monster_2, 450, 64, 64, 800, 5)
+            #monster = Enemy(x, y, width, height, end, lives, begin)
+
+    return monster
 
