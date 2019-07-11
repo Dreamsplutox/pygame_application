@@ -14,11 +14,11 @@ monster_1, monster_1_ia, monster_2, monster_2_ia, ground = inputControl.control_
 # Game part
 pygame.init()
 
-win = pygame.display.set_mode((1200, 675))
+win = pygame.display.set_mode((1210, 598))
 
 pygame.display.set_caption("First Game in Python")
 
-bg = pygame.image.load('images/bg.jpg')
+bg = pygame.image.load('images/arene1.jpg')
 
 clock = pygame.time.Clock()
 
