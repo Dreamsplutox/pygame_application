@@ -4,11 +4,19 @@ import sys
 #print ("The arguments are: " , str(arguments))
 def control_input(arguments):
     list_monsters = ["ghost", "golem", "player", "enemy"]
+    list_ia = ["agressive", "fuyarde", "random", "op"]
+    list_grounds = ["1", "2", "3"]
     print(len(arguments))
     if len(arguments) < 6:
         if len(arguments) == 1:
-            print("selection des arguments par défaut : ghost, agressive, golem, fuyarde, 2")
-            return "ghost", "agressive", "golem", "fuyarde", "2"
+            monster_1 = list_monsters[randint(0,3)]
+            monster_1_ia = list_ia[randint(0,3)]
+            monster_2 = list_monsters[randint(0,3)]
+            monster_2_ia = list_ia[randint(0,3)]
+            ground = list_grounds[randint(0,2)]
+            print("selection des arguments par défaut : monster_1 = ", monster_1, " monster_1_ia = ", monster_1_ia,
+                  " monster_2 = ", monster_2, " monster_2_ia = ", monster_2_ia, " ground = ", ground)
+            return monster_1, monster_1_ia, monster_2, monster_2_ia, ground
         print("Pas assez d'arguments entrés ! Il faut en entrer 5")
         sys.exit()
     else:
