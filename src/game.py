@@ -42,9 +42,9 @@ def redrawGameWindow():
     win.blit(bg, (0, 0))
     #pygame.draw.rect(win, (0, 0, 0), (0, 0, 1210, 110))
     text_lives_monster_1 = font_lives.render("vies restantes : 3", 1, (255, 0, 0))
-    text_percentage_monster_1 = font_percentage.render("degats reçus : 50%", 1, (255, 255, 255))
-    text_lives_monster_2 = font_lives.render("vies restantes : 2", 1, (255, 0, 0))
-    text_percentage_monster_2 = font_percentage.render("degats reçus : 74%", 1, (255, 255, 255))
+    text_percentage_monster_1 = font_percentage.render("degats reçus : "+ str(monster_in_game_1.percentage) +"%", 1, (255, 255, 255))
+    text_lives_monster_2 = font_lives.render("vies restantes : 3", 1, (255, 0, 0))
+    text_percentage_monster_2 = font_percentage.render("degats reçus : " + str(monster_in_game_1.percentage) +"%", 1, (255, 255, 255))
     win.blit(text_lives_monster_1, (positions_text[0], positions_text[2]))
     win.blit(text_percentage_monster_1, (positions_text[0], positions_text[3]))
     win.blit(text_lives_monster_2, (positions_text[1], positions_text[2]))
@@ -71,6 +71,9 @@ def redrawGameWindow():
     print("monster 2 left = ", monster_in_game_2.left)
     print("")
     '''
+    print("monster in game 1 percentage = ",monster_in_game_1.percentage)
+    print("monster in game 2 percentage = ", monster_in_game_2.percentage)
+    print("")
 
     pygame.display.update()
 
@@ -108,6 +111,8 @@ while run:
             1]:
             if bullet_1.x + bullet_1.radius > monster_in_game_2.hitbox[0] and bullet_1.x - bullet_1.radius < monster_in_game_2.hitbox[0] + \
                     monster_in_game_2.hitbox[2]:
+
+                monster_in_game_2.hit(bullet_1.facing, ground_max_x, win)
                 '''
                 hitSound.play()
                 goblin.hit()
@@ -125,6 +130,7 @@ while run:
             1]:
             if bullet_2.x + bullet_2.radius > monster_in_game_1.hitbox[0] and bullet_2.x - bullet_2.radius < monster_in_game_1.hitbox[0] + \
                     monster_in_game_1.hitbox[2]:
+                monster_in_game_1.hit(bullet_2.facing, ground_max_x, win)
                 '''
                 hitSound.play()
                 goblin.hit()

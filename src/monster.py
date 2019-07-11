@@ -2,6 +2,8 @@ import pygame
 
 pygame.init()
 
+looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
+
 class Monster(object):
     def __init__(self, x, y, width, height, end, lives, begin=0, left=True):
         self.x = x
@@ -16,6 +18,7 @@ class Monster(object):
         self.alive = True #est-il en vie?
         self.lives = lives
         self.left = left
+        self.percentage = 0
 
     def move(self):
         if self.vel > 0:
@@ -31,9 +34,30 @@ class Monster(object):
                 self.vel = self.vel * -1
                 self.walkCount = 0
 
-    def hit(self):
+    def hit(self, direction, limit, win):
+        self.percentage += 20
+        # décalage gauche ou droite
+        if direction == -1:
+            self.x = self.x - (self.percentage)
+        else:
+            self.x = self.x + (self.percentage)
+        # restart condition, for now pause the game, we will see that later
+        if self.x < 0 or self.x > limit:
+            font1 = pygame.font.SysFont('comicsans', 28, True)
+            text = font1.render("Un joueur est tombé, pause temporaire", 1, (255, 0, 0))
+            win.blit(text, (250 - (text.get_width() / 2), 200))
+            self.draw(win)
+            pygame.display.update()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.set_volume(0.8)
+            looseSound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
         if self.health > 1:
             self.health -= 1
         else:
-            self.alive = False
+            wait = 1
+            #self.alive = False
     # print('hit')
