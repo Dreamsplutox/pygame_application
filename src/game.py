@@ -1,10 +1,15 @@
 from random import *
 import pygame
+import inputControl
+import sys
 
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
 from player import Player
-from src.projectile import Projectile
+from projectile import Projectile
+
+
+monster_1, monster_1_ia, monster_2, monster_2_ia, ground = inputControl.control_input(sys.argv)
 
 # Game part
 pygame.init()
