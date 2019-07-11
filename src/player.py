@@ -46,6 +46,8 @@ class Player(Monster):
                 self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
+        self.hitbox = (self.x + 17, self.y -10, 31, 75)
+        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
     '''
     def __init__(self, x, y, width, height, end, lives, begin=0):
         self.x = x

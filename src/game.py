@@ -104,12 +104,33 @@ while run:
         shootLoop_monster_2 = 0
 
     for bullet_1 in bullets_monster_1:
+        if bullet_1.y - bullet_1.radius < monster_in_game_2.hitbox[1] + monster_in_game_2.hitbox[3] and bullet_1.y + bullet_1.radius > monster_in_game_2.hitbox[
+            1]:
+            if bullet_1.x + bullet_1.radius > monster_in_game_2.hitbox[0] and bullet_1.x - bullet_1.radius < monster_in_game_2.hitbox[0] + \
+                    monster_in_game_2.hitbox[2]:
+                '''
+                hitSound.play()
+                goblin.hit()
+                man.score += 1
+                '''
+                bullets_monster_1.pop(bullets_monster_1.index(bullet_1))
+
         if bullet_1.x < ground_max_x  and bullet_1.x > 0:
             bullet_1.x += bullet_1.vel
         else:
             bullets_monster_1.pop(bullets_monster_1.index(bullet_1))
 
     for bullet_2 in bullets_monster_2:
+        if bullet_2.y - bullet_2.radius < monster_in_game_1.hitbox[1] + monster_in_game_1.hitbox[3] and bullet_2.y + bullet_2.radius > monster_in_game_1.hitbox[
+            1]:
+            if bullet_2.x + bullet_2.radius > monster_in_game_1.hitbox[0] and bullet_2.x - bullet_2.radius < monster_in_game_1.hitbox[0] + \
+                    monster_in_game_1.hitbox[2]:
+                '''
+                hitSound.play()
+                goblin.hit()
+                man.score += 1
+                '''
+                bullets_monster_2.pop(bullets_monster_2.index(bullet_2))
         if bullet_2.x < ground_max_x  and bullet_2.x > 0:
             bullet_2.x += bullet_2.vel
         else:

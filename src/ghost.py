@@ -42,3 +42,5 @@ class Ghost(Monster):
                 self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
+        self.hitbox = (self.x + 10, self.y - 10, 25, 55)
+        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

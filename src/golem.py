@@ -30,3 +30,6 @@ class Golem(Monster):
                 self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
+        #self.hitbox = (self.x + 17, self.y + 2, 31, 57)
+        self.hitbox = (self.x + 17, self.y + 2, 60, 77)
+        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
