@@ -6,7 +6,7 @@ from src.enemy import Enemy
 from src.player import Player
 from src.projectile import Projectile
 
-con = p.connect("dbname='python_game_data' user='postgres' host='127.0.0.1' password='postgre'")
+con = p.connect("dbname='python_game_data' user='postgres' host='192.168.99.100' password='postgres'")
 cur = con.cursor()
 cur.execute("select * from game_text")
 rows = cur.fetchall()
