@@ -78,20 +78,23 @@ def init_music_ground_and_positions(ground):
         win = pygame.display.set_mode((1210, 598))
         positions_text = [130, 900, 17, 47]
         positions_monster = [10, 1120, 7]
+        ground_max_x = 1210
     elif ground == "2":
         bg = pygame.image.load('images/arene2.png')
         music = pygame.mixer.music.load('sounds/musiques/musicArene2.mp3')
         win = pygame.display.set_mode((1100, 675))
         positions_text = [130, 800, 17, 47]
         positions_monster = [10, 1020, 7]
+        ground_max_x = 1100
     else:
         bg = pygame.image.load('images/arene3.png')
         music = pygame.mixer.music.load('sounds/musiques/musicArene3.mp3')
         win = pygame.display.set_mode((1050, 590))
         positions_text = [130, 750, 17, 47]
         positions_monster = [10, 970, 7]
+        ground_max_x = 1050
 
-    return bg, music, win, positions_text, positions_monster
+    return bg, music, win, positions_text, positions_monster, ground_max_x
 
 def init_images_for_score(monster_1, monster_2):
     list_monsters = ["ghost", "golem", "player", "enemy"]
@@ -122,38 +125,41 @@ def init_monster_in_game(monster_name, monster_number, ground):
     if ground == "1":
         start_x_monster_1 = 60
         start_x_monster_2 = 1150
+        end = 1150
     elif ground == "2":
         start_x_monster_1 = 60
         start_x_monster_2 = 1040
+        end = 1040
     else:
         start_x_monster_1 = 60
         start_x_monster_2 = 950
+        end = 950
 
     if monster_number == 1:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 64, 64, 800, 5)
+            monster = Ghost(start_x_monster_1, 410, 64, 64, end, 5)
             #monster = Ghost(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 380, 64, 64, 800, 5)
+            monster = Golem(start_x_monster_1, 380, 64, 64, end, 5)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_1, 410, 64, 64, 800, 5)
+            monster = Player(start_x_monster_1, 410, 64, 64, end, 5)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_1, 450, 64, 64, 800, 5)
+            monster = Enemy(start_x_monster_1, 410, 64, 64, end, 5)
             #monster = Enemy(x, y, width, height, end, lives, begin)
     else:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_2, 410, 64, 64, 800, 5)
+            monster = Ghost(start_x_monster_2, 410, 64, 64, end, 5)
             #monster = Ghost(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_2, 380, 64, 64, 800, 5)
+            monster = Golem(start_x_monster_2, 380, 64, 64, end, 5)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_2, 410, 64, 64, 800, 5)
+            monster = Player(start_x_monster_2, 410, 64, 64, end, 5)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_2, 450, 64, 64, 800, 5)
+            monster = Enemy(start_x_monster_2, 410, 64, 64, end, 5)
             #monster = Enemy(x, y, width, height, end, lives, begin)
 
     return monster

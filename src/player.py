@@ -1,5 +1,6 @@
 import pygame
 import psycopg2 as p
+from monster import Monster
 
 pygame.init()
 
@@ -8,23 +9,44 @@ cur = con.cursor()
 cur.execute("select * from game_text")
 rows = cur.fetchall()
 
-walkRight = [pygame.image.load('images/human/R1.png'), pygame.image.load('images/human/R2.png'),
-             pygame.image.load('images/human/R3.png'), pygame.image.load('images/human/R4.png'),
-             pygame.image.load('images/human/R5.png'), pygame.image.load('images/human/R6.png'),
-             pygame.image.load('images/human/R7.png'), pygame.image.load('images/human/R8.png'),
-             pygame.image.load('images/human/R9.png')]
-walkLeft = [pygame.image.load('images/human/L1.png'), pygame.image.load('images/human/L2.png'),
-            pygame.image.load('images/human/L3.png'), pygame.image.load('images/human/L4.png'),
-            pygame.image.load('images/human/L5.png'), pygame.image.load('images/human/L6.png'),
-            pygame.image.load('images/human/L7.png'), pygame.image.load('images/human/L8.png'),
-            pygame.image.load('images/human/L9.png')]
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 
 font = pygame.font.SysFont('comicsans', 30, True)
 
 
-class Player(object):
+class Player(Monster):
+    walkRight = [pygame.image.load('images/human/R1.png'), pygame.image.load('images/human/R2.png'),
+                 pygame.image.load('images/human/R3.png'), pygame.image.load('images/human/R4.png'),
+                 pygame.image.load('images/human/R5.png'), pygame.image.load('images/human/R6.png'),
+                 pygame.image.load('images/human/R7.png'), pygame.image.load('images/human/R8.png'),
+                 pygame.image.load('images/human/R9.png')]
+    walkLeft = [pygame.image.load('images/human/L1.png'), pygame.image.load('images/human/L2.png'),
+                pygame.image.load('images/human/L3.png'), pygame.image.load('images/human/L4.png'),
+                pygame.image.load('images/human/L5.png'), pygame.image.load('images/human/L6.png'),
+                pygame.image.load('images/human/L7.png'), pygame.image.load('images/human/L8.png'),
+                pygame.image.load('images/human/L9.png')]
+
+    def __init__(self, x, y, width, height, end, lives, begin=0):
+        Monster.__init__(self, x, y, width, height, end, lives, begin)
+        self.isJumping = False
+        self.jump = 10
+
+    def draw(self, win):
+        self.move()
+        if self.alive:
+            if self.walkCount + 1 >= 27:
+                self.walkCount = 0
+
+            if self.vel > 0:
+                self.left = False
+                win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+            else:
+                self.left = True
+                win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+    '''
     def __init__(self, x, y, width, height, end, lives, begin=0):
         self.x = x
         self.y = y
@@ -94,3 +116,4 @@ class Player(object):
                 if event.type == pygame.QUIT:
                     i = 301
                     pygame.quit()
+    '''

@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 class Monster(object):
-    def __init__(self, x, y, width, height, end, lives, begin=0):
+    def __init__(self, x, y, width, height, end, lives, begin=0, left=True):
         self.x = x
         self.y = y
         self.width = width
@@ -15,6 +15,7 @@ class Monster(object):
         self.health = 10 #la vie
         self.alive = True #est-il en vie?
         self.lives = lives
+        self.left = left
 
     def move(self):
         if self.vel > 0:

@@ -23,8 +23,10 @@ class Golem(Monster):
                 self.walkCount = 0
 
             if self.vel > 0:
+                self.left = False
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
+                self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1

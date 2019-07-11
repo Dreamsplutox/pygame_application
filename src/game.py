@@ -18,7 +18,7 @@ monster_1_img, monster_2_img = inputControl.init_images_for_score(monster_1, mon
 
 print("monster 1 = ", monster_1, " monster 2 = ", monster_2)
 
-bg, music, win, positions_text, positions_monster = inputControl.init_music_ground_and_positions(ground)
+bg, music, win, positions_text, positions_monster, ground_max_x = inputControl.init_music_ground_and_positions(ground)
 #win = pygame.display.set_mode((1210, 598))
 
 pygame.display.set_caption("First Game in Python")
@@ -29,6 +29,7 @@ clock = pygame.time.Clock()
 
 winSound = pygame.mixer.Sound('sounds/win.wav')
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
+bulletSound = pygame.mixer.Sound("sounds/bullet.wav")
 
 #music = pygame.mixer.music.load('sounds/music.mp3')
 pygame.mixer.music.set_volume(0.4)
@@ -59,8 +60,18 @@ def redrawGameWindow():
     ghost.draw(win)
     golem.draw(win)
     '''
-    for bullet in bullets:
-        bullet.draw(win)
+    for bullet_1 in bullets_monster_1:
+        bullet_1.draw(win)
+
+    for bullet_2 in bullets_monster_2:
+        bullet_2.draw(win)
+
+    '''
+    print("monster 1 left = ", monster_in_game_1.left)
+    print("monster 2 left = ", monster_in_game_2.left)
+    print("")
+    '''
+
     pygame.display.update()
 
 
@@ -72,18 +83,58 @@ font_percentage = pygame.font.SysFont('comicsans', 28)
 #ghost = Ghost(100, 410, 64, 64, 450, 5)
 monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground)
 monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground)
+bullets_monster_1 = []
+bullets_monster_2 = []
+shootLoop_monster_1 = 0
+shootLoop_monster_2 = 0
 
-if monster_in_game_1 == monster_in_game_2:
-    print("WTF")
-else:
-    print("monster_in_game_1 = ", monster_in_game_1)
-    print("monster_in_game_2 = ", monster_in_game_2)
-shootLoop = 0
-bullets = []
 run = True
 
 while run:
     clock.tick(27)
+
+    if shootLoop_monster_1 > 0:
+        shootLoop_monster_1 += 1
+    if shootLoop_monster_1 > 3:
+        shootLoop_monster_1 = 0
+
+    if shootLoop_monster_2 > 0:
+        shootLoop_monster_2 += 1
+    if shootLoop_monster_2 > 3:
+        shootLoop_monster_2 = 0
+
+    for bullet_1 in bullets_monster_1:
+        if bullet_1.x < ground_max_x  and bullet_1.x > 0:
+            bullet_1.x += bullet_1.vel
+        else:
+            bullets_monster_1.pop(bullets_monster_1.index(bullet_1))
+
+    for bullet_2 in bullets_monster_2:
+        if bullet_2.x < ground_max_x  and bullet_2.x > 0:
+            bullet_2.x += bullet_2.vel
+        else:
+            bullets_monster_2.pop(bullets_monster_2.index(bullet_2))
+
+    if randint(0, 35) == 5 and shootLoop_monster_1 == 0:
+        if monster_in_game_1.left:
+            facing_monster_1 = -1
+        else:
+            facing_monster_1 = 1
+        if len(bullets_monster_1) < 5:
+            bulletSound.play()
+            bullets_monster_1.append(
+                Projectile(round(monster_in_game_1.x + monster_in_game_1.width // 2), round(monster_in_game_1.y + monster_in_game_1.height // 2), 6, (0, 0, 0), facing_monster_1))
+
+    if randint(0, 35) == 5 and shootLoop_monster_2 == 0:
+        if monster_in_game_2.left:
+            facing_monster_2 = -1
+        else:
+            facing_monster_2 = 1
+        if len(bullets_monster_2) < 5:
+            bulletSound.play()
+            bullets_monster_2.append(
+                Projectile(round(monster_in_game_2.x + monster_in_game_2.width // 2), round(monster_in_game_2.y + monster_in_game_2.height // 2), 6, (0, 0, 0), facing_monster_2))
+
 
     # win condition
     '''
