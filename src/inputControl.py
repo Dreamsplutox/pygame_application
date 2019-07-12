@@ -71,7 +71,6 @@ def control_input(arguments):
         return monster_1, monster_1_ia, monster_2, monster_2_ia, ground
 
 def init_music_ground_and_positions(ground):
-
     if ground == "1":
         bg = pygame.image.load('images/arene1.jpg')
         music = pygame.mixer.music.load('sounds/musiques/musicArene1.mp3')
@@ -120,47 +119,79 @@ def init_images_for_score(monster_1, monster_2):
 
     return monster_1_img, monster_2_img
 
-def init_monster_in_game(monster_name, monster_number, ground):
+def init_monster_in_game(monster_name, monster_number, ground, lives):
     list_monsters = ["ghost", "golem", "player", "enemy"]
     if ground == "1":
         start_x_monster_1 = 60
-        start_x_monster_2 = 1150
+        start_x_monster_2 = 850
         end = 1150
     elif ground == "2":
         start_x_monster_1 = 60
-        start_x_monster_2 = 1040
+        start_x_monster_2 = 740
         end = 1040
     else:
         start_x_monster_1 = 60
-        start_x_monster_2 = 950
+        start_x_monster_2 = 650
         end = 950
 
     if monster_number == 1:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 64, 64, end, 5)
-            #monster = Ghost(x, y, width, height, end, lives, begin)
+            monster = Ghost(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
+            #monster = Ghost(x, y, width, height, end, lives, begin, left)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 380, 64, 64, end, 5)
+            monster = Golem(start_x_monster_1, 380, 64, 64, end, lives, 0, True)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_1, 410, 64, 64, end, 5)
+            monster = Player(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_1, 410, 64, 64, end, 5)
+            monster = Enemy(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
             #monster = Enemy(x, y, width, height, end, lives, begin)
     else:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_2, 410, 64, 64, end, 5)
+            monster = Ghost(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
             #monster = Ghost(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_2, 380, 64, 64, end, 5)
+            monster = Golem(start_x_monster_2, 380, 64, 64, end, lives, 0, True, -3)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_2, 410, 64, 64, end, 5)
+            monster = Player(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_2, 410, 64, 64, end, 5)
+            monster = Enemy(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
             #monster = Enemy(x, y, width, height, end, lives, begin)
 
     return monster
 
+def get_win_text(monster_name, winner=1):
+    if winner == 0:
+        my_font = pygame.font.SysFont('comicsans', 75, True)
+        my_text = my_font.render("Egalité !", 1, (0, 0, 0))
+    elif winner == 1:
+        if monster_name == "ghost":
+            my_font = pygame.font.Font("fonts/ghost.otf", 100)
+            my_text = my_font.render("VICTOIRE DU JOUEUR 1 !", 1,  (200, 200, 200) , True)
+        elif monster_name == "player":
+            my_font = pygame.font.Font("fonts/human.ttf", 65)
+            my_text = my_font.render("Victoire du joueur 1 !", 1,  (255, 215, 0))
+        elif monster_name == "golem":
+            my_font = pygame.font.Font("fonts/golem.ttf", 65)
+            my_text = my_font.render("Victoire du joueur 1 !", 1, (142, 84, 52))
+        else:
+            my_font = pygame.font.Font("fonts/goblin.ttf", 75)
+            my_text = my_font.render("Victoire du joueur 1 !", 1, (127, 221, 76), True)
+    else:
+        if monster_name == "ghost":
+            my_font = pygame.font.Font("fonts/ghost.otf", 100)
+            my_text = my_font.render("VICTOIRE DU JOUEUR 2 !", 1, (200, 200, 200), True)
+        elif monster_name == "player":
+            my_font = pygame.font.Font("fonts/human.ttf", 65)
+            my_text = my_font.render("Victoire du joueur 2 !", 1,  (255, 215, 0))
+        elif monster_name == "golem":
+            my_font = pygame.font.Font("fonts/golem.ttf", 65)
+            my_text = my_font.render("Victoire du joueur 2 !", 1, (142, 84, 52))
+        else:
+            my_font = pygame.font.Font("fonts/goblin.ttf", 75)
+            my_text = my_font.render("Victoire du joueur 2 !", 1, (127, 221, 76), True)
+
+    return my_font, my_text

@@ -23,10 +23,11 @@ class Ghost(Monster):
                 pygame.image.load('images/ghost/fantomeDL5.png'), pygame.image.load('images/ghost/fantomeDL6.png'),
                 pygame.image.load('images/ghost/fantomeDL7.png')]
 
-    def __init__(self, x, y, width, height, end, lives, begin=0):
-        Monster.__init__(self, x, y, width, height, end, lives, begin)
+    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
+        Monster.__init__(self, x, y, width, height, end, lives, begin, left, vel)
         self.isFlying = False
         self.fly = 10
+        self.name = "ghost"
 
     def draw(self, win):
         self.move()

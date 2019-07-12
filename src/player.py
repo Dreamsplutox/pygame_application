@@ -27,10 +27,11 @@ class Player(Monster):
                 pygame.image.load('images/human/L7.png'), pygame.image.load('images/human/L8.png'),
                 pygame.image.load('images/human/L9.png')]
 
-    def __init__(self, x, y, width, height, end, lives, begin=0):
-        Monster.__init__(self, x, y, width, height, end, lives, begin)
+    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
+        Monster.__init__(self, x, y, width, height, end, lives, begin, left, vel)
         self.isJumping = False
         self.jump = 10
+        self.name = "player"
 
     def draw(self, win):
         self.move()
@@ -39,6 +40,7 @@ class Player(Monster):
                 self.walkCount = 0
 
             if self.vel > 0:
+                print("walk right player")
                 self.left = False
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1

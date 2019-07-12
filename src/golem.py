@@ -11,10 +11,11 @@ class Golem(Monster):
                  pygame.image.load('images/golem/golemL2.png'), pygame.image.load('images/golem/golemL1.png'),
                  pygame.image.load('images/golem/golemL3.png'), pygame.image.load('images/golem/golemL3.png')]
 
-    def __init__(self, x, y, width, height, end, lives, begin=0):
-        Monster.__init__(self, x, y, width, height, end, lives, begin)
+    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
+        Monster.__init__(self, x, y, width, height, end, lives, begin, left, vel)
         self.isJumping = False
         self.jump = 10
+        self.name = "golem"
 
     def draw(self, win):
         self.move()

@@ -1,5 +1,4 @@
 import pygame
-
 pygame.init()
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
@@ -18,18 +17,21 @@ class Enemy(object):
                 pygame.image.load('images/goblin/L9E.png'), pygame.image.load('images/goblin/L10E.png'),
                 pygame.image.load('images/goblin/L11E.png')]
 
-    def __init__(self, x, y, width, height, end, begin=0):
+    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.path = [begin, end]
         self.walkCount = 0
-        self.vel = 3
+        self.vel = vel
         self.hitbox = (self.x + 17, self.y + 2, 31, 57)
         self.health = 10
         self.visible = True
         self.percentage = 0
+        self.left = left
+        self.lives = lives
+        self.name = "enemy"
 
     def draw(self, win):
         self.move()
@@ -64,28 +66,28 @@ class Enemy(object):
             else:
                 self.vel = self.vel * -1
                 self.walkCount = 0
+        '''
+        if self.vel > 0:
+            if self.x + self.vel < self.path[1]:
+                self.x += self.vel
+            else:
+                self.vel = self.vel * -1
+                self.walkCount = 0
+        else:
+            if self.x - self.vel > self.path[0]:
+                self.x += self.vel
+            else:
+                self.vel = self.vel * -1
+                self.walkCount = 0
+        '''
 
     def hit(self, direction, limit, win):
-        self.percentage += 20
+        self.percentage += 100
         #décalage gauche ou droite
         if direction == -1:
             self.x = self.x - (self.percentage)
         else:
             self.x = self.x + (self.percentage)
-        #restart condition, for now pause the game, we will see that later
-        if self.x < 0 or self.x > limit:
-            font1 = pygame.font.SysFont('comicsans', 28, True)
-            text = font1.render("Un joueur est tombé, pause temporaire", 1, (255, 0, 0))
-            win.blit(text, (250 - (text.get_width() / 2), 200))
-            self.draw(win)
-            pygame.display.update()
-            pygame.mixer.music.stop()
-            pygame.mixer.music.set_volume(0.8)
-            looseSound.play()
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
 
         if self.health > 1:
             self.health -= 1

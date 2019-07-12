@@ -2,6 +2,7 @@ from random import *
 import pygame
 import inputControl
 import sys
+import time
 
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
@@ -39,12 +40,15 @@ pygame.mixer.music.play(-1)
 def redrawGameWindow():
     global walkCount
     #draw bg and score area
+    #affichage basique
     win.blit(bg, (0, 0))
     #pygame.draw.rect(win, (0, 0, 0), (0, 0, 1210, 110))
-    text_lives_monster_1 = font_lives.render("vies restantes : 3", 1, (255, 0, 0))
+
+    text_lives_monster_1 = font_lives.render("vies restantes : " + str(monster_in_game_1.lives), 1, (255, 0, 0))
     text_percentage_monster_1 = font_percentage.render("degats reçus : "+ str(monster_in_game_1.percentage) +"%", 1, (255, 255, 255))
-    text_lives_monster_2 = font_lives.render("vies restantes : 3", 1, (255, 0, 0))
-    text_percentage_monster_2 = font_percentage.render("degats reçus : " + str(monster_in_game_1.percentage) +"%", 1, (255, 255, 255))
+    text_lives_monster_2 = font_lives.render("vies restantes : " + str(monster_in_game_2.lives), 1, (255, 0, 0))
+    text_percentage_monster_2 = font_percentage.render("degats reçus : " + str(monster_in_game_2.percentage) +"%", 1, (255, 255, 255))
+
     win.blit(text_lives_monster_1, (positions_text[0], positions_text[2]))
     win.blit(text_percentage_monster_1, (positions_text[0], positions_text[3]))
     win.blit(text_lives_monster_2, (positions_text[1], positions_text[2]))
@@ -66,36 +70,136 @@ def redrawGameWindow():
     for bullet_2 in bullets_monster_2:
         bullet_2.draw(win)
 
-    '''
+
     print("monster 1 left = ", monster_in_game_1.left)
     print("monster 2 left = ", monster_in_game_2.left)
-    print("")
+    print("monster_1_lives = ", monster_in_game_1.lives, "monster_2_in_lives = ", monster_in_game_2.lives)
+
     '''
     print("monster in game 1 percentage = ",monster_in_game_1.percentage)
     print("monster in game 2 percentage = ", monster_in_game_2.percentage)
     print("")
+    '''
 
     pygame.display.update()
 
 
 # mainloop
-font_lives = pygame.font.SysFont('comicsans', 25, True)
-font_percentage = pygame.font.SysFont('comicsans', 28)
 #man = Player(300, 410, 64, 64)
 #golem = Golem(300, 380, 64, 64, 370, 5)
 #ghost = Ghost(100, 410, 64, 64, 450, 5)
-monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground)
-monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground)
+monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground, 1)
+monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground, 1)
 bullets_monster_1 = []
 bullets_monster_2 = []
+
+font_lives = pygame.font.SysFont('comicsans', 25, True)
+font_percentage = pygame.font.SysFont('comicsans', 28)
+font_test = pygame.font.Font("fonts/ghost.ttf", 26)
+
+'''
+text_lives_monster_1 = font_lives.render("vies restantes : " + str(monster_in_game_1.lives), 1, (255, 0, 0))
+text_percentage_monster_1 = font_percentage.render("degats reçus : "+ str(monster_in_game_1.percentage) +"%", 1, (255, 255, 255))
+text_lives_monster_2 = font_lives.render("vies restantes : " + str(monster_in_game_2.lives), 1, (255, 0, 0))
+text_percentage_monster_2 = font_percentage.render("degats reçus : " + str(monster_in_game_2.percentage) +"%", 1, (255, 255, 255))
+'''
+
 shootLoop_monster_1 = 0
 shootLoop_monster_2 = 0
 
 run = True
 
 while run:
+
     clock.tick(27)
 
+    dead_monster = 0
+
+    #si un monstre est en dehors du terrain, afficher la boucle de loose
+    if monster_in_game_1.x > ground_max_x or monster_in_game_1.x < -10:
+        dead_monster = 1
+    elif monster_in_game_2.x > ground_max_x or monster_in_game_2.x < -10:
+        dead_monster = 2
+
+    if dead_monster != 0:
+        if dead_monster == 1:
+            lives = [monster_in_game_1.lives - 1, monster_in_game_2.lives]
+        else:
+            lives = [monster_in_game_1.lives, monster_in_game_2.lives - 1]
+
+        #si vie d'un personnage == 0, activer fonction de victoire, sinon relancer
+        if lives[0] == 0 and lives[1] == 0:
+            text_lives_monster_1 = font_lives.render("vies restantes : " + str(lives[0]), 1, (255, 0, 0))
+            text_lives_monster_2 = font_lives.render("vies restantes : " + str(lives[1]), 1, (255, 0, 0))
+            win.blit(text_lives_monster_1, (positions_text[0], positions_text[2]))
+            win.blit(text_lives_monster_2, (positions_text[0], positions_text[2]))
+
+            font_loose, text_loose = inputControl.get_win_text(monster_in_game_1.name, 0)
+
+            win.blit(text_loose, (650 - (text_loose.get_width() / 2), 300))
+            pygame.display.update()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.set_volume(0.8)
+            winSound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+
+        elif lives[0] == 0:
+            text_lives_monster_1 = font_lives.render("vies restantes : " + str(lives[0]), 1, (255, 0, 0))
+            win.blit(text_lives_monster_1, (positions_text[0], positions_text[2]))
+
+            font_loose, text_loose = inputControl.get_win_text(monster_in_game_2.name, 2)
+
+            win.blit(text_loose, (650 - (text_loose.get_width() / 2), 300))
+            pygame.display.update()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.set_volume(0.8)
+            winSound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+        elif lives[1] == 0:
+            text_lives_monster_2 = font_lives.render("vies restantes : " + str(lives[1]), 1, (255, 0, 0))
+            win.blit(text_lives_monster_2, (positions_text[0], positions_text[2]))
+
+            font_loose, text_loose = inputControl.get_win_text(monster_in_game_1.name, 1)
+
+            win.blit(text_loose, (650 - (text_loose.get_width() / 2), 300))
+            pygame.display.update()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.set_volume(0.8)
+            winSound.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+
+        text_pause = font_percentage.render("le joueur " + str(dead_monster) + " est mort, pause temporaire", 1,
+                                            (255, 0, 0))
+        win.blit(text_pause, (250 - (text_pause.get_width() / 2), 200))
+        pygame.display.update()
+        pygame.mixer.music.stop()
+        pygame.mixer.music.set_volume(0.8)
+        looseSound.play()
+        pygame.time.delay(2500)
+
+        del monster_in_game_1
+        del monster_in_game_2
+
+        monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground, lives[0])
+        monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground, lives[1])
+        bullets_monster_1 = []
+        bullets_monster_2 = []
+        shootLoop_monster_1 = 0
+        shootLoop_monster_2 = 0
+
+
+
+
+    #Cooldown pour les projectiles
     if shootLoop_monster_1 > 0:
         shootLoop_monster_1 += 1
     if shootLoop_monster_1 > 3:
@@ -106,6 +210,7 @@ while run:
     if shootLoop_monster_2 > 3:
         shootLoop_monster_2 = 0
 
+    #Gestion des projectiles
     for bullet_1 in bullets_monster_1:
         if bullet_1.y - bullet_1.radius < monster_in_game_2.hitbox[1] + monster_in_game_2.hitbox[3] and bullet_1.y + bullet_1.radius > monster_in_game_2.hitbox[
             1]:
@@ -142,7 +247,8 @@ while run:
         else:
             bullets_monster_2.pop(bullets_monster_2.index(bullet_2))
 
-    if randint(0, 35) == 5 and shootLoop_monster_1 == 0:
+    #Tir automatique
+    if randint(0, 30) == 5 and shootLoop_monster_1 == 0:
         if monster_in_game_1.left:
             facing_monster_1 = -1
         else:
@@ -152,7 +258,7 @@ while run:
             bullets_monster_1.append(
                 Projectile(round(monster_in_game_1.x + monster_in_game_1.width // 2), round(monster_in_game_1.y + monster_in_game_1.height // 2), 6, (0, 0, 0), facing_monster_1))
 
-    if randint(0, 35) == 5 and shootLoop_monster_2 == 0:
+    if randint(0, 30) == 5 and shootLoop_monster_2 == 0:
         if monster_in_game_2.left:
             facing_monster_2 = -1
         else:
@@ -172,46 +278,11 @@ while run:
         winSound.play()
     '''
 
-    # del goblin
-    # goblin = Enemy(randint(90,400), 410, 64, 64, 450)
-
+    #possibilité de quitter
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
-    '''
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LEFT] and man.x > man.vel:
-        man.x -= man.vel
-        man.left = True
-        man.right = False
-        man.standing = False
-    elif keys[pygame.K_RIGHT] and man.x < 500 - man.width - man.vel:
-        man.x += man.vel
-        man.right = True
-        man.left = False
-        man.standing = False
-    else:
-        man.standing = True
-        man.walkCount = 0
-    if not (man.isJump):
-        if keys[pygame.K_UP]:
-            man.isJump = True
-            man.right = False
-            man.left = False
-            man.walkCount = 0
-    else:
-        if man.jumpCount >= - 10:
-            neg = 1
-            if man.jumpCount < 0:
-                neg = -1
-            man.y -= (man.jumpCount ** 2) * 0.5 * neg
-            man.jumpCount -= 1
-        else:
-            man.isJump = False
-            man.jumpCount = 10
-    '''
     redrawGameWindow()
 
 pygame.quit()
