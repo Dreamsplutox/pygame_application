@@ -11,26 +11,31 @@ class Golem(Monster):
                  pygame.image.load('images/golem/golemL2.png'), pygame.image.load('images/golem/golemL1.png'),
                  pygame.image.load('images/golem/golemL3.png'), pygame.image.load('images/golem/golemL3.png')]
 
-    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
-        Monster.__init__(self, x, y, width, height, end, lives, begin, left, vel)
+    #self, x, y, range, power, width, height, end, lives, begin = 0, left = True, vel = 3, IA = random
+    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA='agressive', look=1):
+        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, left, vel, IA, look)
         self.isJumping = False
         self.jump = 10
         self.name = "golem"
 
-    def draw(self, win):
-        self.move()
+    def draw(self, enemy, win):
+        self.move(enemy)
         if self.alive:
             if self.walkCount + 1 >= 18:
                 self.walkCount = 0
 
-            if self.vel > 0:
-                self.left = False
+            if self.look == 1:
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
-                self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
         #self.hitbox = (self.x + 17, self.y + 2, 31, 57)
         self.hitbox = (self.x + 17, self.y + 2, 60, 77)
         pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+
+    '''
+    def __str__(self):
+        return "({}, {})".format(self.x, self.y, self.range,
+                                 self.power, self.width, self.height, self.end, self.lives, self.)
+    '''

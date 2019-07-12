@@ -7,7 +7,7 @@ import time
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
 from player import Player
-from enemy import Enemy
+from goblin import Goblin
 from projectile import Projectile
 
 # Game part
@@ -17,7 +17,7 @@ pygame.init()
 monster_1, monster_1_ia, monster_2, monster_2_ia, ground = inputControl.control_input(sys.argv)
 monster_1_img, monster_2_img = inputControl.init_images_for_score(monster_1, monster_2)
 
-print("monster 1 = ", monster_1, " monster 2 = ", monster_2)
+#print("monster 1 = ", monster_1, " monster 2 = ", monster_2)
 
 bg, music, win, positions_text, positions_monster, ground_max_x = inputControl.init_music_ground_and_positions(ground)
 #win = pygame.display.set_mode((1210, 598))
@@ -57,8 +57,8 @@ def redrawGameWindow():
     win.blit(monster_1_img, (positions_monster[0], positions_monster[2]))
     win.blit(monster_2_img, (positions_monster[1], positions_monster[2]))
 
-    monster_in_game_1.draw(win)
-    monster_in_game_2.draw(win)
+    monster_in_game_1.draw(monster_in_game_2, win)
+    monster_in_game_2.draw(monster_in_game_1, win)
     '''
     man.draw(win)
     ghost.draw(win)
@@ -71,9 +71,11 @@ def redrawGameWindow():
         bullet_2.draw(win)
 
 
+    '''
     print("monster 1 left = ", monster_in_game_1.left)
     print("monster 2 left = ", monster_in_game_2.left)
     print("monster_1_lives = ", monster_in_game_1.lives, "monster_2_in_lives = ", monster_in_game_2.lives)
+    '''
 
     '''
     print("monster in game 1 percentage = ",monster_in_game_1.percentage)
@@ -90,6 +92,9 @@ def redrawGameWindow():
 #ghost = Ghost(100, 410, 64, 64, 450, 5)
 monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground, 1)
 monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground, 1)
+
+print("Start monster_1_ia = ", monster_in_game_1.IA)
+print("Start monster_2_ia = ", monster_in_game_2.IA, " look = ", monster_in_game_2.look)
 bullets_monster_1 = []
 bullets_monster_2 = []
 
@@ -113,9 +118,13 @@ while run:
 
     clock.tick(27)
 
-    dead_monster = 0
+    print("Game monster_2_ia = ", monster_in_game_2.IA, " look = ", monster_in_game_2.look)
+
+    monster_in_game_1.canKick(monster_in_game_2)
+    monster_in_game_2.canKick(monster_in_game_1)
 
     #si un monstre est en dehors du terrain, afficher la boucle de loose
+    dead_monster = 0
     if monster_in_game_1.x > ground_max_x or monster_in_game_1.x < -10:
         dead_monster = 1
     elif monster_in_game_2.x > ground_max_x or monster_in_game_2.x < -10:
@@ -217,7 +226,7 @@ while run:
             if bullet_1.x + bullet_1.radius > monster_in_game_2.hitbox[0] and bullet_1.x - bullet_1.radius < monster_in_game_2.hitbox[0] + \
                     monster_in_game_2.hitbox[2]:
 
-                monster_in_game_2.hit(bullet_1.facing, ground_max_x, win)
+                monster_in_game_2.hit(monster_in_game_1)
                 '''
                 hitSound.play()
                 goblin.hit()
@@ -235,7 +244,7 @@ while run:
             1]:
             if bullet_2.x + bullet_2.radius > monster_in_game_1.hitbox[0] and bullet_2.x - bullet_2.radius < monster_in_game_1.hitbox[0] + \
                     monster_in_game_1.hitbox[2]:
-                monster_in_game_1.hit(bullet_2.facing, ground_max_x, win)
+                monster_in_game_1.hit(monster_in_game_2)
                 '''
                 hitSound.play()
                 goblin.hit()
@@ -249,7 +258,7 @@ while run:
 
     #Tir automatique
     if randint(0, 30) == 5 and shootLoop_monster_1 == 0:
-        if monster_in_game_1.left:
+        if monster_in_game_1.look == -1:
             facing_monster_1 = -1
         else:
             facing_monster_1 = 1
@@ -259,7 +268,7 @@ while run:
                 Projectile(round(monster_in_game_1.x + monster_in_game_1.width // 2), round(monster_in_game_1.y + monster_in_game_1.height // 2), 6, (0, 0, 0), facing_monster_1))
 
     if randint(0, 30) == 5 and shootLoop_monster_2 == 0:
-        if monster_in_game_2.left:
+        if monster_in_game_2.look == -1:
             facing_monster_2 = -1
         else:
             facing_monster_2 = 1

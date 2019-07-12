@@ -2,7 +2,7 @@ from random import *
 import psycopg2 as p
 import pygame
 
-from src.enemy import Enemy
+from src.goblin import Enemy
 from src.player import Player
 from src.projectile import Projectile
 

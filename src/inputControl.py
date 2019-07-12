@@ -5,7 +5,7 @@ import pygame
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
 from player import Player
-from enemy import Enemy
+from goblin import Goblin
 from projectile import Projectile
 
 pygame.init()
@@ -15,7 +15,7 @@ def control_input(arguments):
     list_monsters = ["ghost", "golem", "player", "enemy"]
     list_ia = ["agressive", "fuyarde", "random", "op"]
     list_grounds = ["1", "2", "3"]
-    print(len(arguments))
+    print(len(arguments), "arguments")
     if len(arguments) < 6:
         if len(arguments) == 1:
             monster_1 = list_monsters[randint(0,3)]
@@ -135,30 +135,31 @@ def init_monster_in_game(monster_name, monster_number, ground, lives):
         end = 950
 
     if monster_number == 1:
+        #self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA=random, look
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
+            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
             #monster = Ghost(x, y, width, height, end, lives, begin, left)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 380, 64, 64, end, lives, 0, True)
+            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
+            monster = Player(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_1, 410, 64, 64, end, lives, 0, True)
+            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
             #monster = Enemy(x, y, width, height, end, lives, begin)
     else:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
+            monster = Ghost(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
             #monster = Ghost(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_2, 380, 64, 64, end, lives, 0, True, -3)
+            monster = Golem(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
             #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
+            monster = Player(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
             #monster = Player(x, y, width, height, end, lives, begin)
         else:
-            monster = Enemy(start_x_monster_2, 410, 64, 64, end, lives, 0, True, -3)
+            monster = Goblin(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
             #monster = Enemy(x, y, width, height, end, lives, begin)
 
     return monster

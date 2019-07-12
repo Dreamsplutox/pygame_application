@@ -27,14 +27,14 @@ class Player(Monster):
                 pygame.image.load('images/human/L7.png'), pygame.image.load('images/human/L8.png'),
                 pygame.image.load('images/human/L9.png')]
 
-    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
-        Monster.__init__(self, x, y, width, height, end, lives, begin, left, vel)
+    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA='random', look=1):
+        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, left, vel, IA, look)
         self.isJumping = False
         self.jump = 10
         self.name = "player"
 
-    def draw(self, win):
-        self.move()
+    def draw(self, enemy, win):
+        self.move(enemy)
         if self.alive:
             if self.walkCount + 1 >= 27:
                 self.walkCount = 0

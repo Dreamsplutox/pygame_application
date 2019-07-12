@@ -1,12 +1,18 @@
 import pygame
+import random
 pygame.init()
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 
 class Monster(object):
-    def __init__(self, x, y, width, height, end, lives, begin=0, left=True, vel=3):
+    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA='agressive', look=1):
         self.x = x
         self.y = y
+        self.IA = IA
+        self.range = range
+        self.power = power
+        self.cooldown = 0
+        self.direction = 0 #pas sur utilisé
         self.width = width
         self.height = height
         self.path = [begin, end]
@@ -18,46 +24,70 @@ class Monster(object):
         self.lives = lives
         self.left = left
         self.percentage = 0
+        self.look = look
+        self.resistance = 0
+        self.choice = IA
 
-    def move(self):
-        if self.vel > 0:
-            if self.x + self.vel < self.path[1]:
-                self.x += self.vel
+    def move(self, enemy):
+        actual = abs(self.x - enemy.x)
+        #testMoveLeft = abs(self.x - self.look - enemy.x)
+        test = abs(self.x + self.look - enemy.x)
+
+        #print("actual = ", actual, "test = ", test)
+        #pygame.time.delay(1000)
+
+        choice = 0
+
+        if self.IA == 'random':
+            if random.randint(0, 100) == 1:
+                choice = random.choice('afj')
+                if choice == 'a':
+                    self.choice = 'agressive'
+                elif choice == 'f':
+                    self.choice = 'fuyarde'
+                else:
+                    print('player is jumping')
+        if self.choice == 'agressive':
+            if test <= actual:
+                self.x += self.vel * self.look
+                newDirection = 1
             else:
-                self.vel = self.vel * -1
-                self.walkCount = 0
+                self.x -= self.vel * self.look
+                newDirection = -1 * self.look
+        elif self.choice == 'fuyarde':
+            if test >= actual:
+                self.x -= self.vel
+                newDirection = -1
+            else:
+                self.x += self.vel
+                newDirection = 1
+
+
+        # on regarde dans une nouvelle direction
+        if newDirection != self.look:
+            self.walkCount = 0
+
+    def canKick(self, enemy):
+        if self.cooldown <= 0:
+            self.kick(enemy)
         else:
-            if self.x - self.vel > self.path[0]:
-                self.x += self.vel
-            else:
-                self.vel = self.vel * -1
-                self.walkCount = 0
+            self.cooldown -= self.vel
 
-    def hit(self, direction, limit, win):
-        self.percentage += 100
-        # décalage gauche ou droite
+    def kick(self, enemy):
+        if abs(self.x - enemy.x) <= self.range:
+            enemy.hit(self)
+            enemy.knockBack(self.look)
+            self.cooldown = 50
+            if abs(self.x - enemy.x) <= enemy.range:
+                self.hit(enemy)
+                self.knockBack(enemy.look)
+                enemy.cooldown = 50
+
+    def hit(self, enemy):
+        self.percentage += (enemy.power - self.resistance)
+
+    def knockBack(self, direction):
         if direction == -1:
             self.x = self.x - (self.percentage)
         else:
             self.x = self.x + (self.percentage)
-        # restart condition, for now pause the game, we will see that later
-            '''
-            font1 = pygame.font.SysFont('comicsans', 28, True)
-            text = font1.render("Un joueur est tombé, pause temporaire", 1, (255, 0, 0))
-            win.blit(text, (250 - (text.get_width() / 2), 200))
-            self.draw(win)
-            pygame.display.update()
-            pygame.mixer.music.stop()
-            pygame.mixer.music.set_volume(0.8)
-            looseSound.play()
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-            '''
-        if self.health > 1:
-            self.health -= 1
-        else:
-            wait = 1
-            #self.alive = False
-    # print('hit')
