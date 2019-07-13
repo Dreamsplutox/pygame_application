@@ -1,5 +1,4 @@
 import pygame
-import psycopg2 as p
 from monster import Monster
 
 pygame.init()
@@ -22,24 +21,21 @@ class Human(Monster):
                 pygame.image.load('images/human/L7.png'), pygame.image.load('images/human/L8.png'),
                 pygame.image.load('images/human/L9.png')]
 
-    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA='random', look=1):
-        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, left, vel, IA, look)
-        self.isJumping = False
-        self.jump = 10
-        self.name = "player"
+    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='random', look=1):
+        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, vel, IA, look)
+        self.name = "human"
 
     def draw(self, enemy, win):
         self.move(enemy)
-        if self.alive:
-            if self.walkCount + 1 >= 27:
-                self.walkCount = 0
+        if self.walkCount + 1 >= 27:
+            self.walkCount = 0
 
-            if self.look == 1:
-                win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
-                self.walkCount += 1
-            else:
-                win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
-                self.walkCount += 1
+        if self.look == 1:
+            win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
+            self.walkCount += 1
+        else:
+            win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
+            self.walkCount += 1
 
-            self.hitbox = (self.x + 17, self.y - 10, 31, 75)
-            pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        self.hitbox = (self.x + 17, self.y - 10, 31, 75)
+        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

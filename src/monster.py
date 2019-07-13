@@ -5,31 +5,28 @@ pygame.init()
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 
 class Monster(object):
-    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA='agressive', look=1):
-        self.x = x
-        self.y = y
-        self.IA = IA
-        self.range = range + width
-        self.power = power
-        self.cooldown = 0
-        self.direction = 0 #pas sur utilisé
-        self.width = width
-        self.height = height
-        self.path = [begin, end]
-        self.walkCount = 0 #statut pour l'affichage du personnage ==> 1 image pour 3 frames
-        self.vel = vel #vitesse
-        self.hitbox = (self.x + 17, self.y + 2, 31, 57) #à modifier selon la taille du personnage
-        self.health = 10 #la vie
-        self.alive = True #est-il en vie?
-        self.lives = lives
-        self.left = left
-        self.percentage = 0
-        self.look = look
-        self.resistance = 0
-        self.choice = IA
-        self.isHitting = False
-        self.isJump = False
-        self.jumpCount = 10
+    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='agressive', look=1):
+        self.x = x  # position x du monstre
+        self.y = y  # position y du monstre
+        self.IA = IA  # type IA du monstre
+        self.range = range + width  # portée d'attaque du monstre
+        self.power = power  # puissance du monstre
+        self.cooldown = 0  # temps de recharge avant prochaine attaque au corps à corps (pour éviter les spams)
+        self.width = width  # largeur du monstre
+        self.height = height  # hauteur du monstre
+        self.path = [begin, end]  # zone de déplacement autorisée pour le monstre ==> évite de sortir de la carte
+        self.walkCount = 0  # statut pour l'affichage du personnage ==> 1 image pour 3 frames
+        self.vel = vel  # vitesse du monstre
+        self.hitbox = (self.x + 17, self.y + 2, 31, 57)  # à modifier selon la taille du monstre
+        self.health = 10  # la vie
+        self.lives = lives  # nombre de vie, détermine la manche
+        self.percentage = 0  # c'est smash
+        self.look = look  # direction dans laquelle il regarde
+        self.resistance = 0  # résistance aux dégats
+        self.choice = IA  # dans le cas où l'IA est une IA random
+        self.isHitting = False  # savoir s'il tape pour la représentation (voir partie draw des autres clases
+        self.isJump = False  # savoir s'il est en plein saut (pour animation
+        self.jumpCount = 10  # hauteur du saut
 
     def move(self, enemy):
         actual = abs(self.x - enemy.x)
@@ -74,7 +71,7 @@ class Monster(object):
                     self.x += self.vel * self.look
                     newDirection = -1 * self.look
 
-        # on regarde dans une nouvelle direction
+        #on regarde dans une nouvelle direction
         if newDirection != self.look:
             self.walkCount = 0
 
