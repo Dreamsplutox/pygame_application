@@ -4,11 +4,6 @@ from monster import Monster
 
 pygame.init()
 
-con = p.connect("dbname='python_game_data' user='postgres' host='192.168.99.100' password='postgres'")
-cur = con.cursor()
-cur.execute("select * from game_text")
-rows = cur.fetchall()
-
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 

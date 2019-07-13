@@ -23,7 +23,7 @@ bg, music, win, positions_text, positions_monster, ground_max_x = inputControl.i
 #win = pygame.display.set_mode((1210, 598))
 
 pygame.display.set_caption("First Game in Python")
-
+pygame.draw.rect(win, (255, 0, 0), (12,12,12,12))
 #bg = pygame.image.load('images/arene1.jpg')
 
 clock = pygame.time.Clock()
@@ -53,7 +53,6 @@ def redrawGameWindow():
     win.blit(text_percentage_monster_1, (positions_text[0], positions_text[3]))
     win.blit(text_lives_monster_2, (positions_text[1], positions_text[2]))
     win.blit(text_percentage_monster_2, (positions_text[1], positions_text[3]))
-    #draw monsters + score
     win.blit(monster_1_img, (positions_monster[0], positions_monster[2]))
     win.blit(monster_2_img, (positions_monster[1], positions_monster[2]))
 
@@ -93,6 +92,8 @@ def redrawGameWindow():
 monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground, 1)
 monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground, 1)
 
+lives = [monster_in_game_1.lives, monster_in_game_2.lives]
+
 print("Start monster_1_ia = ", monster_in_game_1.IA)
 print("Start monster_2_ia = ", monster_in_game_2.IA, " look = ", monster_in_game_2.look)
 bullets_monster_1 = []
@@ -120,9 +121,12 @@ while run:
 
     print("Game monster_2_ia = ", monster_in_game_2.IA, " look = ", monster_in_game_2.look)
 
-    monster_in_game_1.canKick(monster_in_game_2)
-    monster_in_game_2.canKick(monster_in_game_1)
-
+    if randint(0, 9) >= 5:
+        monster_in_game_1.canKick(monster_in_game_2, win)
+        monster_in_game_2.canKick(monster_in_game_1, win)
+    else:
+        monster_in_game_2.canKick(monster_in_game_1, win)
+        monster_in_game_1.canKick(monster_in_game_2, win)
     #si un monstre est en dehors du terrain, afficher la boucle de loose
     dead_monster = 0
     if monster_in_game_1.x > ground_max_x or monster_in_game_1.x < -10:
@@ -132,9 +136,9 @@ while run:
 
     if dead_monster != 0:
         if dead_monster == 1:
-            lives = [monster_in_game_1.lives - 1, monster_in_game_2.lives]
+            lives[0] -= 1
         else:
-            lives = [monster_in_game_1.lives, monster_in_game_2.lives - 1]
+            lives[1] -= 1
 
         #si vie d'un personnage == 0, activer fonction de victoire, sinon relancer
         if lives[0] == 0 and lives[1] == 0:
@@ -172,7 +176,7 @@ while run:
                         pygame.quit()
         elif lives[1] == 0:
             text_lives_monster_2 = font_lives.render("vies restantes : " + str(lives[1]), 1, (255, 0, 0))
-            win.blit(text_lives_monster_2, (positions_text[0], positions_text[2]))
+            win.blit(text_lives_monster_2, (positions_text[1], positions_text[2]))
 
             font_loose, text_loose = inputControl.get_win_text(monster_in_game_1.name, 1)
 

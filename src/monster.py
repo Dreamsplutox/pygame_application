@@ -9,7 +9,7 @@ class Monster(object):
         self.x = x
         self.y = y
         self.IA = IA
-        self.range = range
+        self.range = range + width
         self.power = power
         self.cooldown = 0
         self.direction = 0 #pas sur utilisé
@@ -27,16 +27,12 @@ class Monster(object):
         self.look = look
         self.resistance = 0
         self.choice = IA
+        self.isHitting = False
 
     def move(self, enemy):
         actual = abs(self.x - enemy.x)
-        #testMoveLeft = abs(self.x - self.look - enemy.x)
         test = abs(self.x + self.look - enemy.x)
-
-        #print("actual = ", actual, "test = ", test)
-        #pygame.time.delay(1000)
-
-        choice = 0
+        newDirection = 0
 
         if self.IA == 'random':
             if random.randint(0, 100) == 1:
@@ -50,7 +46,7 @@ class Monster(object):
         if self.choice == 'agressive':
             if test <= actual:
                 self.x += self.vel * self.look
-                newDirection = 1
+                newDirection = 1 * self.look
             else:
                 self.x -= self.vel * self.look
                 newDirection = -1 * self.look
@@ -62,23 +58,26 @@ class Monster(object):
                 self.x += self.vel
                 newDirection = 1
 
-
         # on regarde dans une nouvelle direction
         if newDirection != self.look:
             self.walkCount = 0
 
-    def canKick(self, enemy):
+    def canKick(self, enemy, win):
         if self.cooldown <= 0:
-            self.kick(enemy)
+            self.kick(enemy, win)
         else:
             self.cooldown -= self.vel
 
-    def kick(self, enemy):
+    def kick(self, enemy,win):
         if abs(self.x - enemy.x) <= self.range:
+            self.isHitting = True
+            self.draw(enemy, win)
             enemy.hit(self)
             enemy.knockBack(self.look)
             self.cooldown = 50
             if abs(self.x - enemy.x) <= enemy.range:
+                enemy.isHitting = True
+                enemy.draw(enemy, win)
                 self.hit(enemy)
                 self.knockBack(enemy.look)
                 enemy.cooldown = 50
