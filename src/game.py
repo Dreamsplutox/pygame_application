@@ -63,20 +63,12 @@ def redrawGameWindow():
 
 
 # mainloop
-monster_in_game_1 = inputControl.init_monster_in_game(monster_1, 1, ground, 1)
-monster_in_game_2 = inputControl.init_monster_in_game(monster_2, 2, ground, 1)
 
-lives = [monster_in_game_1.lives, monster_in_game_2.lives]
+#init vars
+monster_in_game_1, monster_in_game_2, lives, bullets_monster_1, bullets_monster_2,\
+    font_lives, font_percentage, font_test, shootLoop_monster_1, shootLoop_monster_2 \
+    = inputControl.init_vars_before_game_loop(monster_1, monster_2, ground, 1, 1)
 
-bullets_monster_1 = []
-bullets_monster_2 = []
-
-font_lives = pygame.font.SysFont('comicsans', 25, True)
-font_percentage = pygame.font.SysFont('comicsans', 28)
-font_test = pygame.font.Font("fonts/ghost.ttf", 26)
-
-shootLoop_monster_1 = 0
-shootLoop_monster_2 = 0
 
 run = True
 
