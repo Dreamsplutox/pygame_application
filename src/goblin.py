@@ -31,14 +31,12 @@ class Goblin(Monster):
             if self.walkCount + 1 >= 18:
                 self.walkCount = 0
 
-            if self.vel > 0:
-                self.left = False
+            if self.look == 1:
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
-                self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
-        # self.hitbox = (self.x + 17, self.y + 2, 31, 57)
-        self.hitbox = (self.x + 17, self.y + 2, 60, 77)
-        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+
+            self.hitbox = (self.x + 17, self.y - 10, 35, 75)
+            pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

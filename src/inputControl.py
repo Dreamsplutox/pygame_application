@@ -4,14 +4,14 @@ import pygame
 
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
-from player import Player
+from human import Human
 from goblin import Goblin
 from projectile import Projectile
 
 pygame.init()
 
 def control_input(arguments):
-    list_monsters = ["ghost", "golem", "player", "enemy"]
+    list_monsters = ["ghost", "golem", "human", "goblin"]
     list_ia = ["agressive", "fuyarde", "random", "op"]
     list_grounds = ["1", "2", "3"]
 
@@ -33,7 +33,7 @@ def control_input(arguments):
             else:
                 monster_1 = arguments[1]
         else:
-            print("Ce personnage n'existe pas, choisissez entre golem, ghost, player ou enemy")
+            print("Ce personnage n'existe pas, choisissez entre golem, ghost, human ou goblin")
             sys.exit()
     
         if arguments[2] == "agressive" or arguments[2] == "fuyarde" or arguments[2] == "random" or arguments[2] == "op":
@@ -48,7 +48,7 @@ def control_input(arguments):
             else:
                 monster_2 = arguments[3]
         else:
-            print("Ce personnage n'existe pas, choisissez entre golem, ghost, player ou enemy")
+            print("Ce personnage n'existe pas, choisissez entre golem, ghost, human ou goblin")
             sys.exit()
     
         if arguments[4] == "agressive" or arguments[4] == "fuyarde" or arguments[4] == "random" or arguments[4] == "op":
@@ -91,7 +91,7 @@ def init_music_ground_and_positions(ground):
     return bg, music, win, positions_text, positions_monster, ground_max_x
 
 def init_images_for_score(monster_1, monster_2):
-    list_monsters = ["ghost", "golem", "player", "enemy"]
+    list_monsters = ["ghost", "golem", "human", "goblin"]
     #select good image for monster_1
     if monster_1 == list_monsters[0]:
         monster_1_img = pygame.image.load('images/ghost/ghost_char_R.png')
@@ -115,7 +115,7 @@ def init_images_for_score(monster_1, monster_2):
     return monster_1_img, monster_2_img
 
 def init_monster_in_game(monster_name, monster_number, ground, lives):
-    list_monsters = ["ghost", "golem", "player", "enemy"]
+    list_monsters = ["ghost", "golem", "human", "goblin"]
     if ground == "1":
         start_x_monster_1 = 60
         start_x_monster_2 = 850
@@ -132,30 +132,22 @@ def init_monster_in_game(monster_name, monster_number, ground, lives):
     if monster_number == 1:
         #self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA=random, look
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
-            #monster = Ghost(x, y, width, height, end, lives, begin, left)
+            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
-            #monster = Golem(x, y, width, height, end, lives, begin)
+            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
-            #monster = Player(x, y, width, height, end, lives, begin)
+            monster = Human(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
         else:
-            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True)
-            #monster = Enemy(x, y, width, height, end, lives, begin)
+            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
     else:
         if monster_name == list_monsters[0]:
             monster = Ghost(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
-            #monster = Ghost(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[1]:
             monster = Golem(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
-            #monster = Golem(x, y, width, height, end, lives, begin)
         elif monster_name == list_monsters[2]:
-            monster = Player(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
-            #monster = Player(x, y, width, height, end, lives, begin)
+            monster = Human(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
         else:
             monster = Goblin(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
-            #monster = Enemy(x, y, width, height, end, lives, begin)
 
     return monster
 
@@ -167,7 +159,7 @@ def get_win_text(monster_name, winner=1):
         if monster_name == "ghost":
             my_font = pygame.font.Font("fonts/ghost.otf", 100)
             my_text = my_font.render("VICTOIRE DU JOUEUR 1 !", 1,  (200, 200, 200) , True)
-        elif monster_name == "player":
+        elif monster_name == "human":
             my_font = pygame.font.Font("fonts/human.ttf", 65)
             my_text = my_font.render("Victoire du joueur 1 !", 1,  (255, 215, 0))
         elif monster_name == "golem":
@@ -180,7 +172,7 @@ def get_win_text(monster_name, winner=1):
         if monster_name == "ghost":
             my_font = pygame.font.Font("fonts/ghost.otf", 100)
             my_text = my_font.render("VICTOIRE DU JOUEUR 2 !", 1, (200, 200, 200), True)
-        elif monster_name == "player":
+        elif monster_name == "human":
             my_font = pygame.font.Font("fonts/human.ttf", 65)
             my_text = my_font.render("Victoire du joueur 2 !", 1,  (255, 215, 0))
         elif monster_name == "golem":
@@ -191,3 +183,6 @@ def get_win_text(monster_name, winner=1):
             my_text = my_font.render("Victoire du joueur 2 !", 1, (127, 221, 76), True)
 
     return my_font, my_text
+
+def init_vars_before_game_loop():
+    return 1

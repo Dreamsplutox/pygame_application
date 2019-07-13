@@ -3,7 +3,7 @@ import psycopg2 as p
 import pygame
 
 from src.goblin import Enemy
-from src.player import Player
+from src.human import Player
 from src.projectile import Projectile
 
 con = p.connect("dbname='python_game_data' user='postgres' host='192.168.99.100' password='postgres'")

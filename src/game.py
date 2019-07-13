@@ -6,7 +6,7 @@ import time
 
 from ghost import Ghost #pycharm est une pute
 from golem import Golem
-from player import Player
+from human import Human
 from goblin import Goblin
 from projectile import Projectile
 

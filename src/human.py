@@ -10,7 +10,7 @@ looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
 font = pygame.font.SysFont('comicsans', 30, True)
 
 
-class Player(Monster):
+class Human(Monster):
     walkRight = [pygame.image.load('images/human/R1.png'), pygame.image.load('images/human/R2.png'),
                  pygame.image.load('images/human/R3.png'), pygame.image.load('images/human/R4.png'),
                  pygame.image.load('images/human/R5.png'), pygame.image.load('images/human/R6.png'),
@@ -34,14 +34,12 @@ class Player(Monster):
             if self.walkCount + 1 >= 27:
                 self.walkCount = 0
 
-            if self.vel > 0:
-                print("walk right player")
-                self.left = False
+            if self.look == 1:
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
-                self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
-        self.hitbox = (self.x + 17, self.y -10, 31, 75)
-        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+
+            self.hitbox = (self.x + 17, self.y - 10, 31, 75)
+            pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

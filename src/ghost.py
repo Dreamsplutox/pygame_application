@@ -31,18 +31,16 @@ class Ghost(Monster):
 
     def draw(self, enemy, win):
         self.move(enemy)
-        if self.visible:
-            if self.walkCount + 1 >= 33:
+        if self.alive:
+            if self.walkCount + 1 >= 30:
                 self.walkCount = 0
 
-            if self.vel > 0:
-                self.left = False
+            if self.look == 1:
                 win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             else:
-                self.left = True
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
 
-            self.hitbox = (self.x + 23, self.y - 10 , 31, 69)
-            pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
+            self.hitbox = (self.x + 10, self.y - 10, 25, 55)
+            pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
