@@ -22,7 +22,6 @@ win = pygame.display.set_mode((500, 480))
 pygame.display.set_caption("First Game in Python")
 
 bg = pygame.image.load('images/bg.jpg')
-# char = pygame.image.load('images/standing.png')
 
 clock = pygame.time.Clock()
 
@@ -99,15 +98,11 @@ while run:
             if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
                 screamSound.play()
                 man.hit(win)
-                # man.isJump = False
-                # man.jumpCount = 10
                 man.score -= 5
     elif wait_for_Enemy == 0:
         pygame.mixer.stop()
         deathSound.play()
         wait_for_Enemy = 50
-    # del goblin
-    # goblin = Enemy(randint(90,400), 410, 64, 64, 450)
 
     if shootLoop > 0:
         shootLoop += 1

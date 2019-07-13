@@ -44,7 +44,5 @@ class Ghost(Monster):
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
 
-            #pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10)) #vie totale
-            #pygame.draw.rect(win, (0, 128, 0), (self.hitbox[0], self.hitbox[1] - 20, 50 - (5 * (10 - self.health)), 10)) #vie restante
             self.hitbox = (self.x + 23, self.y - 10 , 31, 69)
             pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
