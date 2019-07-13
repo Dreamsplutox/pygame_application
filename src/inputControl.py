@@ -114,40 +114,40 @@ def init_images_for_score(monster_1, monster_2):
 
     return monster_1_img, monster_2_img
 
-def init_monster_in_game(monster_name, monster_number, ground, lives):
+def init_monster_in_game(monster_name, monster_number, ground, lives, IA):
     list_monsters = ["ghost", "golem", "human", "goblin"]
     if ground == "1":
         start_x_monster_1 = 60
         start_x_monster_2 = 850
-        end = 1150
+        end = 1210
     elif ground == "2":
         start_x_monster_1 = 60
         start_x_monster_2 = 740
-        end = 1040
+        end = 1100
     else:
-        start_x_monster_1 = 60
+        start_x_monster_1 = 350
         start_x_monster_2 = 650
-        end = 950
+        end = 1050
 
     if monster_number == 1:
         #self, x, y, range, power, width, height, end, lives, begin=0, left=True, vel=3, IA=random, look
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
+            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, 1)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
+            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, 1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
+            monster = Human(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, 1)
         else:
-            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', 1)
+            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, 1)
     else:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
+            monster = Ghost(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, -1)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
+            monster = Golem(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, -1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
+            monster = Human(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, -1)
         else:
-            monster = Goblin(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, 'agressive', -1)
+            monster = Goblin(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, True, 3, IA, -1)
 
     return monster
 
@@ -184,9 +184,9 @@ def get_win_text(monster_name, winner=1):
 
     return my_font, my_text
 
-def init_vars_before_game_loop(monster_1, monster_2, ground, lives_monster_1, lives_monster_2):
-    monster_in_game_1 = init_monster_in_game(monster_1, 1, ground, lives_monster_1)
-    monster_in_game_2 = init_monster_in_game(monster_2, 2, ground, lives_monster_2)
+def init_vars_before_game_loop(monster_1, monster_2, ground, lives_monster_1, lives_monster_2, ia_monster_1, ia_monster_2):
+    monster_in_game_1 = init_monster_in_game(monster_1, 1, ground, lives_monster_1, ia_monster_1)
+    monster_in_game_2 = init_monster_in_game(monster_2, 2, ground, lives_monster_2, ia_monster_2)
 
     lives = [lives_monster_1, lives_monster_2]
 
@@ -201,3 +201,12 @@ def init_vars_before_game_loop(monster_1, monster_2, ground, lives_monster_1, li
     shootLoop_monster_2 = 0
 
     return monster_in_game_1, monster_in_game_2, lives, bullets_monster_1, bullets_monster_2, font_lives, font_percentage, font_test, shootLoop_monster_1, shootLoop_monster_2
+
+def init_game_music():
+    winSound = pygame.mixer.Sound('sounds/win.wav')
+    looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
+    bulletSound = pygame.mixer.Sound("sounds/bullet.wav")
+
+    return winSound, looseSound, bulletSound
+
+#def cooldown_for_projectiles():

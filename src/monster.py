@@ -28,11 +28,19 @@ class Monster(object):
         self.resistance = 0
         self.choice = IA
         self.isHitting = False
+        self.isJump = False
+        self.jumpCount = 10
 
     def move(self, enemy):
         actual = abs(self.x - enemy.x)
         test = abs(self.x + self.look - enemy.x)
+        test_fuyarde = self.x + self.vel * self.look * -1
         newDirection = 0
+
+        if self.x > enemy.x and self.isJump == False:
+            self.look = -1
+        elif self.x < enemy.x and self.isJump == False:
+            self.look = 1
 
         if self.IA == 'random':
             if random.randint(0, 100) == 1:
@@ -51,12 +59,20 @@ class Monster(object):
                 self.x -= self.vel * self.look
                 newDirection = -1 * self.look
         elif self.choice == 'fuyarde':
-            if test >= actual:
-                self.x -= self.vel
-                newDirection = -1
+            print("path 0 = ", self.path[0], "path 1 = ", self.path[1], "width = ", self.width, "look = ", self.look, "tes2t = ", test_fuyarde)
+            if actual < 1.5 * self.range:
+                print('jump fdp')
+                self.isJump = True
+            elif test_fuyarde <= self.path[0] or test_fuyarde >= self.path[1] - self.width:
+                print("don't move")
             else:
-                self.x += self.vel
-                newDirection = 1
+                print("move fuyarde")
+                if test <= actual :
+                    self.x -= self.vel * self.look
+                    newDirection = 1 * self.look
+                else:
+                    self.x += self.vel * self.look
+                    newDirection = -1 * self.look
 
         # on regarde dans une nouvelle direction
         if newDirection != self.look:
@@ -69,13 +85,14 @@ class Monster(object):
             self.cooldown -= self.vel
 
     def kick(self, enemy,win):
-        if abs(self.x - enemy.x) <= self.range:
+        diff = abs(self.y - enemy.y)
+        if abs(self.x - enemy.x) <= self.range and diff <= self.height:
             self.isHitting = True
             self.draw(enemy, win)
             enemy.hit(self)
             enemy.knockBack(self.look)
             self.cooldown = 50
-            if abs(self.x - enemy.x) <= enemy.range:
+            if abs(self.x - enemy.x) <= enemy.range and diff <= enemy.height:
                 enemy.isHitting = True
                 enemy.draw(enemy, win)
                 self.hit(enemy)
@@ -90,3 +107,18 @@ class Monster(object):
             self.x = self.x - (self.percentage)
         else:
             self.x = self.x + (self.percentage)
+
+    def jump(self):
+        if self.isJump == True:
+            if self.jumpCount >= - 10:
+                neg = 1
+                if self.jumpCount < 0:
+                    neg = -1
+                self.y -= (self.jumpCount ** 2) * 0.2 * neg
+                self.x += self.look * self.vel * 6
+                self.jumpCount -= 1
+            else:
+                self.isJump = False
+                self.jumpCount = 10
+
+
