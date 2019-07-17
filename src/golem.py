@@ -19,8 +19,8 @@ class Golem(Monster):
                 pygame.image.load('images/golem/golemL6.png'), pygame.image.load('images/golem/golemL6.png')]
 
 
-    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='agressive', look=1):
-        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, vel, IA, look)
+    def __init__(self, x, y, end, lives, begin=0, IA='agressive', look=1):
+        Monster.__init__(self, x, y, 10, 20, 80, 75, 10, 200, 10, end, lives, begin, 2, IA, look)
         self.name = "golem"
 
     def draw(self, enemy, win):
@@ -45,5 +45,4 @@ class Golem(Monster):
                 win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
 
-        self.hitbox = (self.x + 17, self.y + 2, 60, 77)
-        #pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        self.hitbox = (self.x+5, self.y + 20, self.width, self.height)

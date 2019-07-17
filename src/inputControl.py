@@ -130,24 +130,23 @@ def init_monster_in_game(monster_name, monster_number, ground, lives, IA):
         end = 1050
 
     if monster_number == 1:
-        #self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA=random, look
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, 1)
+            monster = Ghost(start_x_monster_1, 417, end, lives, 0, IA, 1)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, 1)
+            monster = Golem(start_x_monster_1, 410, end, lives, 0, IA, 1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, 1)
+            monster = Human(start_x_monster_1, 410, end, lives, 0, IA, 1)
         else:
-            monster = Goblin(start_x_monster_1, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, 1)
+            monster = Goblin(start_x_monster_1, 410, end, lives, 0, IA, 1)
     else:
         if monster_name == list_monsters[0]:
-            monster = Ghost(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, -1)
+            monster = Ghost(start_x_monster_2, 417, end, lives, 0, IA, 1)
         elif monster_name == list_monsters[1]:
-            monster = Golem(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, -1)
+            monster = Golem(start_x_monster_2, 410, end, lives, 0, IA, -1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, -1)
+            monster = Human(start_x_monster_2, 410, end, lives, 0, IA, -1)
         else:
-            monster = Goblin(start_x_monster_2, 410, 10, 5, 64, 64, end, lives, 0, 3, IA, -1)
+            monster = Goblin(start_x_monster_2, 410, end, lives, 0, IA, -1)
 
     return monster
 

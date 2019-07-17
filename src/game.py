@@ -138,7 +138,7 @@ while run:
     bullets_monster_2 = inputControl.update_projectiles(bullets_monster_2, monster_in_game_2, monster_in_game_1, ground_max_x)
 
     #Tir automatique
-    if randint(0, 40) == 5 and shootLoop_monster_1 == 0:
+    if randint(0, monster_in_game_1.rate) == 5 and shootLoop_monster_1 == 0:
         if monster_in_game_1.look == -1:
             facing_monster_1 = -1
         else:
@@ -148,7 +148,7 @@ while run:
             bullets_monster_1.append(
                 Projectile(round(monster_in_game_1.x + monster_in_game_1.width // 2), round(monster_in_game_1.y + monster_in_game_1.height // 2), 6, (0, 0, 0), facing_monster_1))
 
-    if randint(0, 40) == 5 and shootLoop_monster_2 == 0:
+    if randint(0, monster_in_game_2.rate) == 5 and shootLoop_monster_2 == 0:
         if monster_in_game_2.look == -1:
             facing_monster_2 = -1
         else:

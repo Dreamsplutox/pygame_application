@@ -15,8 +15,8 @@ class Ghost(Monster):
                 pygame.image.load('images/ghost/fantomeL7.png'), pygame.image.load('images/ghost/fantomeL8.png'),
                 pygame.image.load('images/ghost/fantomeL9.png'), pygame.image.load('images/ghost/fantomeL10.png')]
 
-    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='random', look=1):
-        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, vel, IA, look)
+    def __init__(self, x, y, end, lives, begin=0, IA='random', look=1):
+        Monster.__init__(self, x, y, 5, 7, 45, 45, 4, 10, 3, end, lives, begin, 4, IA, look)
         self.name = "ghost"
 
     def draw(self, enemy, win):
@@ -31,5 +31,4 @@ class Ghost(Monster):
             win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
 
-        self.hitbox = (self.x + 10, self.y - 10, 25, 55)
-        #pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        self.hitbox = (self.x, self.y, self.width, self.height)

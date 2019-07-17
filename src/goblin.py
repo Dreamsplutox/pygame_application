@@ -19,8 +19,8 @@ class Goblin(Monster):
                 pygame.image.load('images/goblin/L9E.png'), pygame.image.load('images/goblin/L10E.png'),
                 pygame.image.load('images/goblin/L11E.png')]
 
-    def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='random', look=1):
-        Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, vel, IA, look)
+    def __init__(self, x, y, end, lives, begin=0, IA='random', look=1):
+        Monster.__init__(self, x, y, 5, 8, 40, 55, 6, 30, 8, end, lives, begin, 5, IA, look)
         self.name = "goblin"
 
     def draw(self, enemy, win):
@@ -35,5 +35,5 @@ class Goblin(Monster):
             win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
 
-        self.hitbox = (self.x + 17, self.y - 10, 35, 75)
-        #pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        self.hitbox = (self.x + 17, self.y + 10, self.width, self.height)
+        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
