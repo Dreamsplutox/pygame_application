@@ -3,6 +3,8 @@ import random
 pygame.init()
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
+MUDA = pygame.mixer.Sound("sounds/MUDA.wav")
+ORA = pygame.mixer.Sound("sounds/ORA.wav")
 
 class Monster(object):
     def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='agressive', look=1):
@@ -40,30 +42,38 @@ class Monster(object):
             self.look = 1
 
         if self.IA == 'random':
-            if random.randint(0, 100) == 1:
+            if random.randint(0, 100) == 1 or self.choice == "random":
                 choice = random.choice('afj')
                 if choice == 'a':
                     self.choice = 'agressive'
                 elif choice == 'f':
                     self.choice = 'fuyarde'
-                else:
-                    print('player is jumping')
+                if choice == 'j':
+                    self.isJump = True
+        elif self.IA == 'try':
+            if self.percentage > enemy.percentage:
+                self.choice = 'fuyarde'
+            else:
+                self.choice = 'agressive'
+
         if self.choice == 'agressive':
+            if enemy.percentage >= 250:
+                self.choice == 'fuyarde'
             if test <= actual:
                 self.x += self.vel * self.look
                 newDirection = 1 * self.look
             else:
                 self.x -= self.vel * self.look
                 newDirection = -1 * self.look
+
         elif self.choice == 'fuyarde':
-            print("path 0 = ", self.path[0], "path 1 = ", self.path[1], "width = ", self.width, "look = ", self.look, "tes2t = ", test_fuyarde)
+            if enemy.percentage >= 250:
+                self.choice == 'agressive'
             if actual < 1.5 * self.range:
-                print('jump fdp')
                 self.isJump = True
             elif test_fuyarde <= self.path[0] or test_fuyarde >= self.path[1] - self.width:
                 print("don't move")
             else:
-                print("move fuyarde")
                 if test <= actual :
                     self.x -= self.vel * self.look
                     newDirection = 1 * self.look
@@ -83,13 +93,14 @@ class Monster(object):
 
     def kick(self, enemy,win):
         diff = abs(self.y - enemy.y)
-        if abs(self.x - enemy.x) <= self.range and diff <= self.height:
+        if abs(self.x - enemy.x) <= self.range and diff <= self.height - 10:
             self.isHitting = True
+            hit.play()
             self.draw(enemy, win)
             enemy.hit(self)
             enemy.knockBack(self.look)
             self.cooldown = 50
-            if abs(self.x - enemy.x) <= enemy.range and diff <= enemy.height:
+            if abs(self.x - enemy.x) <= enemy.range and diff <= enemy.height - 10:
                 enemy.isHitting = True
                 enemy.draw(enemy, win)
                 self.hit(enemy)
@@ -107,10 +118,14 @@ class Monster(object):
 
     def jump(self):
         if self.isJump == True:
+            calcul = self.x + (self.look * self.vel * 6) * 20
+            if calcul < self.path[0] or calcul > self.path[1]:
+                self.look *= -1
             if self.jumpCount >= - 10:
                 neg = 1
                 if self.jumpCount < 0:
                     neg = -1
+
                 self.y -= (self.jumpCount ** 2) * 0.2 * neg
                 self.x += self.look * self.vel * 6
                 self.jumpCount -= 1
