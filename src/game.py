@@ -160,8 +160,9 @@ while run:
 
     #déclenchement des sauts si jamais l'attribut isJump a été passé à True
     monster_in_game_1.jump()
+    monster_in_game_1.knockBack(monster_in_game_2.look)
     monster_in_game_2.jump()
-
+    monster_in_game_2.knockBack(monster_in_game_1.look)
 
 
     #possibilité de quitter en cliquant sur la croix rouge en haut à droite

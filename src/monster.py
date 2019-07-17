@@ -3,8 +3,10 @@ import random
 pygame.init()
 
 looseSound = pygame.mixer.Sound("sounds/loose_zelda.wav")
-MUDA = pygame.mixer.Sound("sounds/MUDA.wav")
-ORA = pygame.mixer.Sound("sounds/ORA.wav")
+muda = pygame.mixer.Sound("sounds/MUDA.wav")
+muda.set_volume(0.3)
+ora = pygame.mixer.Sound("sounds/ORA.wav")
+ora.set_volume(0.4)
 
 class Monster(object):
     def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='agressive', look=1):
@@ -29,6 +31,13 @@ class Monster(object):
         self.isHitting = False  # savoir s'il tape pour la représentation (voir partie draw des autres clases
         self.isJump = False  # savoir s'il est en plein saut (pour animation
         self.jumpCount = 10  # hauteur du saut
+        self.isKnockingBack = False
+        self.knockBackCount = 10
+        random.randint(0,1)
+        if random.randint(0,1) == 0 :
+            self.hitSound = muda
+        else:
+            self.hitSound = ora
 
     def move(self, enemy):
         actual = abs(self.x - enemy.x)
@@ -50,6 +59,7 @@ class Monster(object):
                     self.choice = 'fuyarde'
                 if choice == 'j':
                     self.isJump = True
+
         elif self.IA == 'try':
             if self.percentage > enemy.percentage:
                 self.choice = 'fuyarde'
@@ -57,7 +67,7 @@ class Monster(object):
                 self.choice = 'agressive'
 
         if self.choice == 'agressive':
-            if enemy.percentage >= 250:
+            if enemy.percentage >= 250 or self.cooldown <= 0:
                 self.choice == 'fuyarde'
             if test <= actual:
                 self.x += self.vel * self.look
@@ -95,29 +105,37 @@ class Monster(object):
         diff = abs(self.y - enemy.y)
         if abs(self.x - enemy.x) <= self.range and diff <= self.height - 10:
             self.isHitting = True
-            hit.play()
+            self.hitSound.play()
             self.draw(enemy, win)
             enemy.hit(self)
-            enemy.knockBack(self.look)
-            self.cooldown = 50
+            enemy.isKnockingBack = True
+            self.cooldown = 70
             if abs(self.x - enemy.x) <= enemy.range and diff <= enemy.height - 10:
                 enemy.isHitting = True
                 enemy.draw(enemy, win)
                 self.hit(enemy)
-                self.knockBack(enemy.look)
-                enemy.cooldown = 50
+                self.isKnockingBack = True
+                enemy.cooldown = 70
 
     def hit(self, enemy):
         self.percentage += (enemy.power - self.resistance)
 
     def knockBack(self, direction):
-        if direction == -1:
-            self.x = self.x - (self.percentage)
-        else:
-            self.x = self.x + (self.percentage)
+        if self.isKnockingBack:
+            if self.knockBackCount >= - 10:
+                neg = 1
+                if self.knockBackCount < 0:
+                    neg = -1
+
+                self.y -= (self.knockBackCount ** 2) * 0.02 * neg
+                self.x += direction * self.percentage * 0.1
+                self.knockBackCount -= 1
+            else:
+                self.isKnockingBack = False
+                self.knockBackCount = 10
 
     def jump(self):
-        if self.isJump == True:
+        if self.isJump:
             calcul = self.x + (self.look * self.vel * 6) * 20
             if calcul < self.path[0] or calcul > self.path[1]:
                 self.look *= -1
