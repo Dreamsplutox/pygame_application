@@ -38,4 +38,3 @@ class Human(Monster):
             self.walkCount += 1
 
         self.hitbox = (self.x + 10, self.y + 10, self.width, self.height)
-        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

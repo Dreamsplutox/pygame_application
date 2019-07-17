@@ -117,7 +117,6 @@ class Monster(object):
                 enemy.isHitting = True
                 enemy.draw(enemy, win)
                 self.hit(enemy, round(enemy.power*1.5))
-                self.isKnockingBack = True
                 enemy.cooldown = 70
 
     def hit(self, enemy, bonus=0):
@@ -134,7 +133,7 @@ class Monster(object):
                     neg = -1
 
                 self.y -= (self.knockBackCount ** 2) * 0.02 * neg
-                self.x += direction * (self.percentage * 0.05 - self.weight * 2)
+                self.x += direction * (self.percentage * 0.05 - self.weight * 4)
                 self.knockBackCount -= 1
             else:
                 self.isKnockingBack = False

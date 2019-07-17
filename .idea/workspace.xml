@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cffc296d-b9db-457b-be76-56950d6a91d0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ghost.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ghost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/goblin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/goblin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/golem.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/golem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/human.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputControl.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputControl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/monster.py" afterDir="false" />
-    </list>
+    <list default="true" id="cffc296d-b9db-457b-be76-56950d6a91d0" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +54,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/monster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
+            <state relative-caret-position="259">
               <caret line="101" column="18" selection-start-line="101" selection-start-column="18" selection-end-line="101" selection-end-column="18" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -96,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/src/ghost.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="156">
-              <caret line="18" column="59" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -108,7 +100,7 @@
         <entry file="file://$PROJECT_DIR$/src/human.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
-              <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+              <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -120,7 +112,7 @@
         <entry file="file://$PROJECT_DIR$/src/goblin.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="122">
-              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+              <caret line="22" column="52" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -184,11 +176,11 @@
         <option value="$PROJECT_DIR$/src/player.py" />
         <option value="$PROJECT_DIR$/src/app.py" />
         <option value="$PROJECT_DIR$/src/game.py" />
-        <option value="$PROJECT_DIR$/src/ghost.py" />
         <option value="$PROJECT_DIR$/src/inputControl.py" />
         <option value="$PROJECT_DIR$/src/golem.py" />
-        <option value="$PROJECT_DIR$/src/human.py" />
+        <option value="$PROJECT_DIR$/src/ghost.py" />
         <option value="$PROJECT_DIR$/src/goblin.py" />
+        <option value="$PROJECT_DIR$/src/human.py" />
         <option value="$PROJECT_DIR$/src/monster.py" />
       </list>
     </option>
@@ -409,17 +401,7 @@
     <entry file="file://$PROJECT_DIR$/src/ghost.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
-          <caret line="18" column="59" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/human.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -429,7 +411,17 @@
     <entry file="file://$PROJECT_DIR$/src/goblin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+          <caret line="22" column="52" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/human.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -438,7 +430,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/monster.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
+        <state relative-caret-position="259">
           <caret line="101" column="18" selection-start-line="101" selection-start-column="18" selection-end-line="101" selection-end-column="18" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
