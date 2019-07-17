@@ -14,14 +14,6 @@ class Ghost(Monster):
                 pygame.image.load('images/ghost/fantomeL5.png'), pygame.image.load('images/ghost/fantomeL6.png'),
                 pygame.image.load('images/ghost/fantomeL7.png'), pygame.image.load('images/ghost/fantomeL8.png'),
                 pygame.image.load('images/ghost/fantomeL9.png'), pygame.image.load('images/ghost/fantomeL10.png')]
-    deathRight = [pygame.image.load('images/ghost/fantomeDR1.png'), pygame.image.load('images/ghost/fantomeDR2.png'),
-                pygame.image.load('images/ghost/fantomeDR3.png'), pygame.image.load('images/ghost/fantomeDR4.png'),
-                pygame.image.load('images/ghost/fantomeDR5.png'), pygame.image.load('images/ghost/fantomeDR6.png'),
-                pygame.image.load('images/ghost/fantomeDR7.png')]
-    deathLeft = [pygame.image.load('images/ghost/fantomeDL1.png'), pygame.image.load('images/ghost/fantomeDL2.png'),
-                pygame.image.load('images/ghost/fantomeDL3.png'), pygame.image.load('images/ghost/fantomeDL4.png'),
-                pygame.image.load('images/ghost/fantomeDL5.png'), pygame.image.load('images/ghost/fantomeDL6.png'),
-                pygame.image.load('images/ghost/fantomeDL7.png')]
 
     def __init__(self, x, y, range, power, width, height, end, lives, begin=0, vel=3, IA='random', look=1):
         Monster.__init__(self, x, y, range, power, width, height, end, lives, begin, vel, IA, look)
@@ -40,4 +32,4 @@ class Ghost(Monster):
             self.walkCount += 1
 
         self.hitbox = (self.x + 10, self.y - 10, 25, 55)
-        pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)

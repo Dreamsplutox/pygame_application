@@ -12,7 +12,7 @@ pygame.init()
 
 def control_input(arguments):
     list_monsters = ["ghost", "golem", "human", "goblin"]
-    list_ia = ["agressive", "fuyarde", "random"]
+    list_ia = ["agressive", "fuyarde", "random", "try"]
     list_grounds = ["1", "2", "3"]
 
     if len(arguments) < 6:
@@ -36,7 +36,7 @@ def control_input(arguments):
             print("Ce personnage n'existe pas, choisissez entre golem, ghost, human ou goblin")
             sys.exit()
     
-        if arguments[2] == "agressive" or arguments[2] == "fuyarde" or arguments[2] == "random" or arguments[2] == "op":
+        if arguments[2] == "agressive" or arguments[2] == "fuyarde" or arguments[2] == "random" or arguments[2] == "try":
             monster_1_ia = arguments[2]
         else:
             print("Cette ia (", arguments[2], ") n'existe pas, choisissez entre agressive, fuyarde, op ou random")
@@ -51,7 +51,7 @@ def control_input(arguments):
             print("Ce personnage n'existe pas, choisissez entre golem, ghost, human ou goblin")
             sys.exit()
     
-        if arguments[4] == "agressive" or arguments[4] == "fuyarde" or arguments[4] == "random" or arguments[4] == "op":
+        if arguments[4] == "agressive" or arguments[4] == "fuyarde" or arguments[4] == "random" or arguments[4] == "try":
             monster_2_ia = arguments[4]
         else:
             print("Cette ia (", arguments[4], ") n'existe pas, choisissez entre agressive, fuyarde, op ou random")
