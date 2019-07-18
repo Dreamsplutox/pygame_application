@@ -59,7 +59,7 @@ class Monster(object):
                     self.choice = 'agressive'
                 elif choice == 'f':
                     self.choice = 'fuyarde'
-                if choice == 'j':
+                if choice == 'j'  and not self.isKnockingBack:
                     self.isJump = True
 
         elif self.IA == 'try':
@@ -71,27 +71,30 @@ class Monster(object):
         if self.choice == 'agressive':
             if enemy.percentage >= 150 or self.cooldown <= 0:
                 self.choice == 'fuyarde'
-            if test <= actual:
-                self.x += self.vel * self.look
-                newDirection = 1 * self.look
-            else:
-                self.x -= self.vel * self.look
-                newDirection = -1 * self.look
+
+            if not self.isJump and not self.isKnockingBack:
+                if test <= actual and not self.isJump:
+                    self.x += self.vel * self.look
+                    newDirection = 1 * self.look
+                else:
+                    self.x -= self.vel * self.look
+                    newDirection = -1 * self.look
 
         elif self.choice == 'fuyarde':
             if enemy.percentage >= 150:
                 self.choice == 'agressive'
-            if actual < 1.5 * enemy.range:
+            if actual < 2 * enemy.range and not self.isKnockingBack:
                 self.isJump = True
-            elif test_fuyarde <= self.path[0] or test_fuyarde >= self.path[1] - self.width:
+            elif test_fuyarde <= self.path[0] or test_fuyarde >= self.path[1] - self.width and not self.isKnockingBack:
                 print("don't move")
             else:
-                if test <= actual :
-                    self.x -= self.vel * self.look
-                    newDirection = 1 * self.look
-                else:
-                    self.x += self.vel * self.look
-                    newDirection = -1 * self.look
+                if not self.isJump and not self.isKnockingBack:
+                    if test <= actual:
+                        self.x -= self.vel * self.look
+                        newDirection = 1 * self.look
+                    else:
+                        self.x += self.vel * self.look
+                        newDirection = -1 * self.look
 
         #on regarde dans une nouvelle direction
         if newDirection != self.look:
@@ -112,20 +115,20 @@ class Monster(object):
             self.draw(enemy, win)
             enemy.hit(self,round(self.power*1.5))
             enemy.isKnockingBack = True
-            self.cooldown = 70
+            self.cooldown = 20 + self.rate
             if abs(self.x - enemy.x) <= enemy.range and diff <= enemy.height - 10:
                 enemy.isHitting = True
                 enemy.draw(enemy, win)
                 self.hit(enemy, round(enemy.power*1.5))
-                enemy.cooldown = 70
+                enemy.cooldown = 20 + enemy.rate
 
     def hit(self, enemy, bonus=0):
-        if(enemy.power <= self.resistance):
+        if(enemy.power <= self.resistance + 1):
             self.percentage += 2
         else:
             self.percentage += (enemy.power - self.resistance)
 
-    def knockBack(self, direction):
+    def knockBack(self, direction, adjust=0):
         if self.isKnockingBack:
             if self.knockBackCount >= - 10:
                 neg = 1
@@ -133,7 +136,7 @@ class Monster(object):
                     neg = -1
 
                 self.y -= (self.knockBackCount ** 2) * 0.02 * neg
-                self.x += direction * (self.percentage * 0.05 - self.weight * 4)
+                self.x += direction * (self.percentage * 0.4 - self.weight * 2 + adjust)
                 self.knockBackCount -= 1
             else:
                 self.isKnockingBack = False
@@ -150,7 +153,7 @@ class Monster(object):
                     neg = -1
 
                 self.y -= (self.jumpCount ** 2) * 0.2 * neg
-                self.x += self.look * (self.vel * 6 - self.weight * 2)
+                self.x += self.look * (self.vel * 6 - self.weight)
                 self.jumpCount -= 1
             else:
                 self.isJump = False

@@ -229,6 +229,11 @@ def update_projectiles(bullets_monster, monster_in_game_shooter , monster_in_gam
             if bullet.x + bullet.radius > monster_in_game_damaged.hitbox[0] and bullet.x - bullet.radius < \
                     monster_in_game_damaged.hitbox[0] + monster_in_game_damaged.hitbox[2]:
                 monster_in_game_damaged.hit(monster_in_game_shooter)
+                if monster_in_game_damaged.percentage > 150:
+                    if(bullet.x < monster_in_game_damaged.x):
+                        monster_in_game_damaged.knockBack(1, - 10)
+                    else:
+                        monster_in_game_damaged.knockBack(-1, - 10)
                 bullets_monster.pop(bullets_monster.index(bullet))
 
         if bullet.x < ground_max_x and bullet.x > 0:

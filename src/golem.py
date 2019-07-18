@@ -20,7 +20,7 @@ class Golem(Monster):
 
 
     def __init__(self, x, y, end, lives, begin=0, IA='agressive', look=1):
-        Monster.__init__(self, x, y, 10, 20, 80, 75, 10, 200, 10, end, lives, begin, 2, IA, look)
+        Monster.__init__(self, x, y, 10, 25, 80, 75, 10, 200, 10, end, lives, begin, 3, IA, look)
         self.name = "golem"
 
     def draw(self, enemy, win):

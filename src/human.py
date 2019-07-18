@@ -22,7 +22,7 @@ class Human(Monster):
                 pygame.image.load('images/human/L9.png')]
 
     def __init__(self, x, y, end, lives, begin=0, IA='random', look=1):
-        Monster.__init__(self, x, y, 10, 10, 40, 60, 6, 40, 8, end, lives, begin, 3, IA, look)
+        Monster.__init__(self, x, y, 10, 15, 40, 60, 6, 40, 8, end, lives, begin, 4, IA, look)
         self.name = "human"
 
     def draw(self, enemy, win):

@@ -20,7 +20,7 @@ class Goblin(Monster):
                 pygame.image.load('images/goblin/L11E.png')]
 
     def __init__(self, x, y, end, lives, begin=0, IA='random', look=1):
-        Monster.__init__(self, x, y, 5, 8, 40, 55, 6, 30, 8, end, lives, begin, 5, IA, look)
+        Monster.__init__(self, x, y, 5, 13, 40, 55, 6, 30, 8, end, lives, begin, 6, IA, look)
         self.name = "goblin"
 
     def draw(self, enemy, win):

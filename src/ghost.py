@@ -16,7 +16,7 @@ class Ghost(Monster):
                 pygame.image.load('images/ghost/fantomeL9.png'), pygame.image.load('images/ghost/fantomeL10.png')]
 
     def __init__(self, x, y, end, lives, begin=0, IA='random', look=1):
-        Monster.__init__(self, x, y, 5, 7, 45, 45, 4, 10, 3, end, lives, begin, 4, IA, look)
+        Monster.__init__(self, x, y, 7, 12, 45, 45, 4, 10, 3, end, lives, begin, 5, IA, look)
         self.name = "ghost"
 
     def draw(self, enemy, win):
