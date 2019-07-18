@@ -135,18 +135,18 @@ def init_monster_in_game(monster_name, monster_number, ground, lives, IA):
         elif monster_name == list_monsters[1]:
             monster = Golem(start_x_monster_1, 410, end, lives, 0, IA, 1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_1, 410, end, lives, 0, IA, 1)
+            monster = Human(start_x_monster_1, 420, end, lives, 0, IA, 1)
         else:
-            monster = Goblin(start_x_monster_1, 410, end, lives, 0, IA, 1)
+            monster = Goblin(start_x_monster_1, 430, end, lives, 0, IA, 1)
     else:
         if monster_name == list_monsters[0]:
             monster = Ghost(start_x_monster_2, 417, end, lives, 0, IA, 1)
         elif monster_name == list_monsters[1]:
             monster = Golem(start_x_monster_2, 410, end, lives, 0, IA, -1)
         elif monster_name == list_monsters[2]:
-            monster = Human(start_x_monster_2, 410, end, lives, 0, IA, -1)
+            monster = Human(start_x_monster_2, 420, end, lives, 0, IA, -1)
         else:
-            monster = Goblin(start_x_monster_2, 410, end, lives, 0, IA, -1)
+            monster = Goblin(start_x_monster_2, 430, end, lives, 0, IA, -1)
 
     return monster
 
@@ -231,9 +231,9 @@ def update_projectiles(bullets_monster, monster_in_game_shooter , monster_in_gam
                 monster_in_game_damaged.hit(monster_in_game_shooter)
                 if monster_in_game_damaged.percentage > 150:
                     if(bullet.x < monster_in_game_damaged.x):
-                        monster_in_game_damaged.knockBack(1, - 10)
+                        monster_in_game_damaged.knockBack(1, -2)
                     else:
-                        monster_in_game_damaged.knockBack(-1, - 10)
+                        monster_in_game_damaged.knockBack(-1, -2)
                 bullets_monster.pop(bullets_monster.index(bullet))
 
         if bullet.x < ground_max_x and bullet.x > 0:
